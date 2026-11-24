@@ -62,6 +62,10 @@ public interface ModpackApi {
         });
     }
 
+    default void handleProjectInstallation(Context context, ModDetail modDetail, int selectedVersion) {
+        handleModpackInstallation(context, modDetail, selectedVersion);
+    }
+
     LoaderInstaller installLocalModpack(String modpackName, File modpackFile, String icon) throws IOException;
 
     /**
