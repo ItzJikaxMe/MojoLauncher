@@ -107,7 +107,10 @@ public class MainMenuFragment extends Fragment {
 
         ArrayList<Instance> choices = new ArrayList<>();
         for (Instance instance : allInstances) {
-            if (instance.getGameVersion() == null) continue;
+            String gameVersion = instance.getGameVersion();
+            if (gameVersion == null
+                    || Instance.VERSION_LATEST_RELEASE.equalsIgnoreCase(gameVersion)
+                    || Instance.VERSION_LATEST_SNAPSHOT.equalsIgnoreCase(gameVersion)) continue;
             if ("mod".equals(projectType) && !instance.hasFabricLoader()) continue;
             choices.add(instance);
         }
