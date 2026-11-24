@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -23,6 +26,11 @@ import com.kdt.SimpleArrayAdapter;
 import git.artdeell.mojo.MojoApplication;
 import git.artdeell.mojo.R;
 import git.artdeell.mojo.Tools;
+import git.artdeell.mojo.instances.Instance;
+import git.artdeell.mojo.instances.Instances;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import git.artdeell.mojo.modding.modpacks.api.ModpackApi;
 import git.artdeell.mojo.modding.modpacks.imagecache.ImageReceiver;
 import git.artdeell.mojo.modding.modpacks.imagecache.ModIconCache;
@@ -176,10 +184,17 @@ public class ModItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     mExtendedSpinner = mExtendedLayout.findViewById(R.id.mod_extended_version_spinner);
                     mExtendedErrorTextView = mExtendedLayout.findViewById(R.id.mod_extended_error_textview);
 
-                    mExtendedButton.setOnClickListener(v1 -> mModpackApi.handleProjectInstallation(
-                            mExtendedButton.getContext().getApplicationContext(),
-                            mModDetail,
-                            mExtendedSpinner.getSelectedItemPosition()));
+                    mExtendedButton.setOnClickListener(v1 -> {
+                        if (mModDetail == null) return;
+                        if (mModDetail.isModpack) {
+                            mModpackApi.handleProjectInstallation(
+                                    mExtendedButton.getContext().getApplicationContext(),
+                                    mModDetail,
+                                    mExtendedSpinner.getSelectedItemPosition());
+                        } else {
+                            showTargetInstancePicker();
+                        }
+                    });
                     mExtendedSpinner.setAdapter(mLoadingAdapter);
                 } else {
                     if(isExtended()) closeDetailedView();
@@ -280,6 +295,70 @@ public class ModItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 mExtendedSpinner.setAdapter(null);
                 mVersionAdapter.setObjects(null);
             }
+        }
+
+        private void showTargetInstancePicker() {
+            final java.util.List<Instance> instances;
+            try {
+                instances = Instances.loadAllInstances();
+            } catch (IOException e) {
+                Toast.makeText(mExtendedButton.getContext(), "Could not load installed instances", Toast.LENGTH_LONG).show();
+                return;
+            }
+            if (instances.isEmpty()) {
+                Toast.makeText(mExtendedButton.getContext(), "No installed Minecraft instances found", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            String[] labels = new String[instances.size()];
+            for (int i = 0; i < instances.size(); i++) {
+                Instance instance = instances.get(i);
+                String name = instance.name == null || instance.name.trim().isEmpty()
+                        ? "Minecraft" : instance.name;
+                labels[i] = name + "  •  " + instance.versionId
+                        + (instance.sharedData ? "  •  Shared folder" : "");
+            }
+
+            new AlertDialog.Builder(mExtendedButton.getContext())
+                    .setTitle("Choose Minecraft installation")
+                    .setItems(labels, (dialog, which) -> {
+                        Instance target = instances.get(which);
+                        ArrayList<Integer> compatibleIndexes = new ArrayList<>();
+                        ArrayList<String> compatibleLabels = new ArrayList<>();
+                        if (mModDetail.versionGameVersions != null) {
+                            for (int i = 0; i < mModDetail.versionGameVersions.length; i++) {
+                                String[] supported = mModDetail.versionGameVersions[i];
+                                if (supported == null) continue;
+                                for (String gameVersion : supported) {
+                                    if (target.versionId.equals(gameVersion)) {
+                                        compatibleIndexes.add(i);
+                                        compatibleLabels.add(mModDetail.versionNames[i]);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        if (compatibleIndexes.isEmpty()) {
+                            Toast.makeText(mExtendedButton.getContext(),
+                                    "No compatible release for Minecraft " + target.versionId,
+                                    Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        new AlertDialog.Builder(mExtendedButton.getContext())
+                                .setTitle("Choose addon version for " + target.versionId)
+                                .setItems(compatibleLabels.toArray(new String[0]), (versionDialog, selected) -> {
+                                    int versionIndex = compatibleIndexes.get(selected);
+                                    mModpackApi.handleProjectInstallation(
+                                            mExtendedButton.getContext().getApplicationContext(),
+                                            mModDetail,
+                                            versionIndex,
+                                            target);
+                                })
+                                .setNegativeButton(android.R.string.cancel, null)
+                                .show();
+                    })
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show();
         }
 
         private void openDetailedView() {
