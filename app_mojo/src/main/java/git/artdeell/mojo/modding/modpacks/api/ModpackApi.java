@@ -13,6 +13,7 @@ import git.artdeell.mojo.modding.modpacks.models.ModDetail;
 import git.artdeell.mojo.modding.modpacks.models.ModItem;
 import git.artdeell.mojo.modding.modpacks.models.SearchFilters;
 import git.artdeell.mojo.modding.modpacks.models.SearchResult;
+import git.artdeell.mojo.instances.Instance;
 
 import java.io.File;
 import java.io.IOException;
@@ -64,6 +65,10 @@ public interface ModpackApi {
 
     default void handleProjectInstallation(Context context, ModDetail modDetail, int selectedVersion) {
         handleModpackInstallation(context, modDetail, selectedVersion);
+    }
+
+    default void handleProjectInstallation(Context context, ModDetail modDetail, int selectedVersion, Instance targetInstance) {
+        handleProjectInstallation(context, modDetail, selectedVersion);
     }
 
     LoaderInstaller installLocalModpack(String modpackName, File modpackFile, String icon) throws IOException;
