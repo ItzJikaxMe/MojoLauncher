@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -147,7 +148,7 @@ public class SearchModFragment extends Fragment implements ModItemAdapter.Search
                 Toast.makeText(context, "Choose an installed Minecraft version first.", Toast.LENGTH_LONG).show();
             }
             mSearchFilters.mcVersion = targetGameVersion;
-            mSearchFilters.loader = targetLoader;
+            mSearchFilters.loader = "mod".equals(projectType) ? targetLoader : null;
             modpackApi = new ModrinthApi(targetGameVersion, targetLoader);
         }
     }
