@@ -12,11 +12,39 @@
 	<ScrollView
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
+		android:fillViewport="true"
+		android:clipToPadding="false"
 		app:layout_constraintTop_toTopOf="parent"
 		app:layout_constraintBottom_toTopOf="@id/mc_version_spinner">
 		<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+			android:layout_height="wrap_content"
+			android:paddingHorizontal="8dp"
+			android:paddingTop="14dp"
+			android:paddingBottom="18dp">
+
+			<TextView
+				android:id="@+id/home_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="MOJO LAUNCHER"
+				android:textColor="@color/primary_text"
+				android:textSize="21sp"
+				android:textStyle="bold"
+				android:letterSpacing="0.06"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+
+			<TextView
+				android:id="@+id/home_subtitle"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="3dp"
+				android:text="Your Minecraft. Your world."
+				android:textColor="@color/secondary_text"
+				android:textSize="12sp"
+				app:layout_constraintStart_toStartOf="@id/home_title"
+				app:layout_constraintTop_toBottomOf="@id/home_title" />
 			<androidx.constraintlayout.widget.Guideline
 				android:id="@+id/center_guideline"
 				android:layout_width="0dp"
@@ -29,14 +57,15 @@
 				android:layout_width="0dp"
 				android:text="@string/mcl_tab_wiki"
 				android:drawableStart="@drawable/ic_px_book"
-				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/home_subtitle"
+				android:layout_marginTop="16dp"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintEnd_toStartOf="@id/social_divider" />
 			<View
 				android:id="@+id/social_divider"
 				style="@style/LauncherFragment_Divider"
 				android:layout_marginVertical="@dimen/padding_large"
-				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintTop_toTopOf="@id/news_button"
 				app:layout_constraintStart_toStartOf="@id/center_guideline"
 				app:layout_constraintEnd_toEndOf="@id/center_guideline"
 				app:layout_constraintBottom_toBottomOf="@id/news_button"/>
@@ -46,10 +75,24 @@
 				android:layout_width="0dp"
 				android:text="@string/mcl_button_social_media"
 				android:drawableStart="@drawable/ic_social_media"
-				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintTop_toTopOf="@id/news_button"
 				app:layout_constraintStart_toEndOf="@id/social_divider"
 				app:layout_constraintEnd_toEndOf="parent"/>
 
+
+			<TextView
+				android:id="@+id/home_section_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="8dp"
+				android:layout_marginTop="20dp"
+				android:text="MANAGE YOUR GAME"
+				android:textColor="@color/secondary_text"
+				android:textSize="11sp"
+				android:textStyle="bold"
+				android:letterSpacing="0.10"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/home_section_title" />
 
 			<com.kdt.mcgui.LauncherMenuButton
 				android:id="@+id/custom_control_button"
