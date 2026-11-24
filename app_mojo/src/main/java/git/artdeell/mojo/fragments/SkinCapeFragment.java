@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -72,7 +73,9 @@ public class SkinCapeFragment extends Fragment {
             if (bytes.length == 0 || bytes.length > 5 * 1024 * 1024)
                 throw new IOException("PNG must be 5 MB or smaller");
 
-            File folder = new File(requireContext().getExternalFilesDir(null), "skins");
+            File appStorage = requireContext().getExternalFilesDir(null);
+            if (appStorage == null) appStorage = requireContext().getFilesDir();
+            File folder = new File(appStorage, "skins");
             if (!folder.exists() && !folder.mkdirs()) throw new IOException("Cannot create skins folder");
             File target = new File(folder, pendingType + ".png");
             try (FileOutputStream file = new FileOutputStream(target)) { file.write(bytes); }
