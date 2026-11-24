@@ -172,7 +172,10 @@ public class SearchModFragment extends Fragment implements ModItemAdapter.Search
         });
         mFilterButton.setOnClickListener(v -> displayFilterDialog());
         mImportButton = view.findViewById(R.id.mineButton_import_local_modpack);
-        if (!"modpack".equals(projectType)) mImportButton.setVisibility(View.GONE);
+        if (!"modpack".equals(projectType)) {
+            mImportButton.setVisibility(View.GONE);
+            mFilterButton.setVisibility(View.GONE);
+        }
         mImportButton.setOnClickListener(v -> {
             mImportLauncher.launch("*/*");
         });
