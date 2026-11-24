@@ -104,21 +104,40 @@ public class ModrinthApi implements ModpackApi{
 
     @Override
     public ModDetail getModDetails(ModItem item) {
-
         JsonArray response = mApiHandler.get(String.format("project/%s/version", item.id), JsonArray.class);
-        if(response == null) return null;
-        System.out.println(response);
-        String[] names = new String[response.size()];
-        String[] mcNames = new String[response.size()];
-        String[] urls = new String[response.size()];
-        String[] hashes = new String[response.size()];
-        String[] fileNames = new String[response.size()];
+        if (response == null) return null;
 
-        for (int i=0; i<response.size(); ++i) {
+        String targetMinecraftVersion = null;
+        if (!"modpack".equals(item.projectType)) {
+            Instance selectedInstance = Instances.loadSelectedInstance();
+            if (selectedInstance != null) targetMinecraftVersion = selectedInstance.versionId;
+        }
+
+        ArrayList<String> names = new ArrayList<>();
+        ArrayList<String> mcNames = new ArrayList<>();
+        ArrayList<String> urls = new ArrayList<>();
+        ArrayList<String> hashes = new ArrayList<>();
+        ArrayList<String> fileNames = new ArrayList<>();
+
+        for (int i = 0; i < response.size(); i++) {
             JsonObject version = response.get(i).getAsJsonObject();
-            names[i] = version.get("name").getAsString();
-            mcNames[i] = version.get("game_versions").getAsJsonArray().get(0).getAsString();
+            JsonArray gameVersions = version.getAsJsonArray("game_versions");
+            if (gameVersions == null || gameVersions.size() == 0) continue;
+            String compatibleVersion = gameVersions.get(0).getAsString();
+            if (targetMinecraftVersion != null) {
+                boolean matches = false;
+                for (int j = 0; j < gameVersions.size(); j++) {
+                    if (targetMinecraftVersion.equals(gameVersions.get(j).getAsString())) {
+                        matches = true;
+                        compatibleVersion = targetMinecraftVersion;
+                        break;
+                    }
+                }
+                if (!matches) continue;
+            }
+
             JsonArray files = version.getAsJsonArray("files");
+            if (files == null || files.size() == 0) continue;
             int primaryIndex = 0;
             for (int fileIndex = 0; fileIndex < files.size(); fileIndex++) {
                 JsonObject candidate = files.get(fileIndex).getAsJsonObject();
@@ -128,24 +147,25 @@ public class ModrinthApi implements ModpackApi{
                 }
             }
             JsonObject primaryFile = files.get(primaryIndex).getAsJsonObject();
-            urls[i] = primaryFile.get("url").getAsString();
-            fileNames[i] = primaryFile.get("filename").getAsString();
-            // Assume there may not be hashes, in case the API changes
+            names.add(version.get("name").getAsString());
+            mcNames.add(compatibleVersion);
+            urls.add(primaryFile.get("url").getAsString());
+            fileNames.add(primaryFile.get("filename").getAsString());
             JsonObject hashesMap = primaryFile.has("hashes") && primaryFile.get("hashes").isJsonObject()
                     ? primaryFile.getAsJsonObject("hashes") : null;
-            if(hashesMap == null || hashesMap.get("sha1") == null){
-                hashes[i] = null;
-                continue;
-            }
-
-            hashes[i] = hashesMap.get("sha1").getAsString();
+            hashes.add(hashesMap != null && hashesMap.has("sha1")
+                    ? hashesMap.get("sha1").getAsString() : null);
         }
 
-        ModDetail detail = new ModDetail(item, names, mcNames, urls, hashes);
-        detail.versionFileNames = fileNames;
+        if (names.isEmpty()) return null;
+        ModDetail detail = new ModDetail(item,
+                names.toArray(new String[0]),
+                mcNames.toArray(new String[0]),
+                urls.toArray(new String[0]),
+                hashes.toArray(new String[0]));
+        detail.versionFileNames = fileNames.toArray(new String[0]);
         return detail;
     }
-
 
     @Override
     public void handleProjectInstallation(Context context, ModDetail detail, int selectedVersion) {
