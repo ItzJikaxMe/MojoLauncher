@@ -235,9 +235,7 @@ public class SkinCapeFragment extends Fragment {
                 if (candidate.optBoolean("primary", false)) { selected = candidate; break; }
             }
             String fileName = selected.getString("filename");
-            String download = selected.getJSONObject("url").toString();
-            // Modrinth exposes the file URL as a string.
-            download = selected.getString("url");
+            String download = selected.getString("url");
             File target = new File(mods, fileName);
             File temporary = new File(mods, fileName + ".download");
             HttpURLConnection fileConnection = (HttpURLConnection) new URL(download).openConnection();
