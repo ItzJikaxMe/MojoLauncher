@@ -567,4 +567,7 @@
     <string name="clean_partfiles_wait">Clearing download cache…</string>
     <string name="warn_auth_type_missing">%s is not available, using local account</string>
     <string name="launcher_modpacks">Modpacks</string>
+    <string name="launcher_mods">Mods</string>
+    <string name="launcher_shaders">Shaders</string>
+    <string name="launcher_resourcepacks">Resource Packs</string>
 </resources>
