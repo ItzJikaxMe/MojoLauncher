@@ -75,9 +75,9 @@ public class MainMenuFragment extends Fragment {
 
         mOpenDirectoryButton.setOnClickListener((v)-> openGameDirectory(v.getContext()));
         mModpacksButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), SearchModFragment.class, SearchModFragment.TAG, null));
-        mModsButton.setOnClickListener(v -> openAddonDirectory(requireContext(), "mods"));
-        mShadersButton.setOnClickListener(v -> openAddonDirectory(requireContext(), "shaderpacks"));
-        mResourcePacksButton.setOnClickListener(v -> openAddonDirectory(requireContext(), "resourcepacks"));
+        mModsButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), SearchModsFragment.class, SearchModsFragment.TAG, null));
+        mShadersButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), SearchShadersFragment.class, SearchShadersFragment.TAG, null));
+        mResourcePacksButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), SearchResourcePacksFragment.class, SearchResourcePacksFragment.TAG, null));
 
 
         mNewsButton.setOnLongClickListener((v)->{
