@@ -12,12 +12,14 @@ public class ModDetail extends ModItem {
     public String[] versionUrls;
     /* SHA 1 hashes, null if a hash is unavailable */
     public String[] versionHashes;
+    public String[] versionFileNames;
     public ModDetail(ModItem item, String[] versionNames, String[] mcVersionNames, String[] versionUrls, String[] hashes) {
         super(item.apiSource, item.isModpack, item.id, item.title, item.description, item.imageUrl);
         this.versionNames = versionNames;
         this.mcVersionNames = mcVersionNames;
         this.versionUrls = versionUrls;
         this.versionHashes = hashes;
+        this.projectType = item.projectType;
 
         // Add the mc version to the version model
         for (int i=0; i<versionNames.length; i++){
