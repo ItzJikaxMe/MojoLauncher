@@ -101,6 +101,25 @@ public class Instances {
         return loadInstances(Instance.class, null);
     }
 
+    public static String getInstanceId(Instance instance) {
+        return instance == null || instance.mInstanceRoot == null ? null : instance.mInstanceRoot.getName();
+    }
+
+    public static Instance loadInstanceById(String instanceId) {
+        if (instanceId == null || instanceId.trim().isEmpty() || !instanceId.equals(new File(instanceId).getName()))
+            return null;
+        try {
+            File root = new File(sInstancePath, instanceId);
+            if (!root.getCanonicalFile().getParentFile().equals(sInstancePath.getCanonicalFile())) return null;
+            Instance instance = read(root, Instance.class);
+            if (instance == null) return null;
+            instance.sanitize();
+            return instance;
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
     private static File findNewInstanceRoot(String prefix) {
         File instanceRoot;
         do {
