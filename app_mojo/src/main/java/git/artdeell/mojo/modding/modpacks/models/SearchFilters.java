@@ -9,6 +9,8 @@ public class SearchFilters {
     public boolean isModpack;
     /** Modrinth project type: mod, modpack, shader, or resourcepack. */
     public String projectType;
+    /** Optional Modrinth loader category, such as fabric. */
+    public String loader;
     public String name;
     @Nullable public String mcVersion;
 
