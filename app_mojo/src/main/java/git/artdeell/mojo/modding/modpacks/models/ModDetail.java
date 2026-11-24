@@ -13,6 +13,7 @@ public class ModDetail extends ModItem {
     /* SHA 1 hashes, null if a hash is unavailable */
     public String[] versionHashes;
     public String[] versionFileNames;
+    public String[][] versionGameVersions;
     public ModDetail(ModItem item, String[] versionNames, String[] mcVersionNames, String[] versionUrls, String[] hashes) {
         super(item.apiSource, item.isModpack, item.id, item.title, item.description, item.imageUrl);
         this.versionNames = versionNames;
