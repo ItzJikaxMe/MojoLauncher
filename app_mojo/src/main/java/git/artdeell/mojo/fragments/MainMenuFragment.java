@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.appcompat.app.AlertDialog;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -31,6 +32,9 @@ import git.artdeell.mojo.instances.Instances;
 import git.artdeell.mojo.utils.FileUtils;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainMenuFragment extends Fragment {
     public static final String TAG = "MainMenuFragment";
@@ -75,9 +79,12 @@ public class MainMenuFragment extends Fragment {
 
         mOpenDirectoryButton.setOnClickListener((v)-> openGameDirectory(v.getContext()));
         mModpacksButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), SearchModFragment.class, SearchModFragment.TAG, null));
-        mModsButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), SearchModsFragment.class, SearchModsFragment.TAG, null));
-        mShadersButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), SearchShadersFragment.class, SearchShadersFragment.TAG, null));
-        mResourcePacksButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), SearchResourcePacksFragment.class, SearchResourcePacksFragment.TAG, null));
+        mModsButton.setOnClickListener(v -> chooseAddonInstance(
+                "mod", SearchModsFragment.class, SearchModsFragment.TAG));
+        mShadersButton.setOnClickListener(v -> chooseAddonInstance(
+                "shader", SearchShadersFragment.class, SearchShadersFragment.TAG));
+        mResourcePacksButton.setOnClickListener(v -> chooseAddonInstance(
+                "resourcepack", SearchResourcePacksFragment.class, SearchResourcePacksFragment.TAG));
 
 
         mNewsButton.setOnLongClickListener((v)->{
@@ -86,6 +93,61 @@ public class MainMenuFragment extends Fragment {
         });
     }
 
+
+    private void chooseAddonInstance(String projectType,
+                                     Class<? extends Fragment> destination,
+                                     String fragmentTag) {
+        final List<Instance> allInstances;
+        try {
+            allInstances = Instances.loadAllInstances();
+        } catch (IOException e) {
+            Toast.makeText(requireContext(), "Could not load installed Minecraft versions", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        ArrayList<Instance> choices = new ArrayList<>();
+        for (Instance instance : allInstances) {
+            if (instance.getGameVersion() == null) continue;
+            if ("mod".equals(projectType) && !instance.hasFabricLoader()) continue;
+            choices.add(instance);
+        }
+
+        if (choices.isEmpty()) {
+            String message = "mod".equals(projectType)
+                    ? "Install a Fabric version first to browse Fabric mods."
+                    : "No installed Minecraft versions found.";
+            Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        String[] labels = new String[choices.size()];
+        for (int i = 0; i < choices.size(); i++) {
+            Instance instance = choices.get(i);
+            String name = Tools.validOrNullString(instance.name);
+            if (name == null) name = "Minecraft";
+            String loader = instance.getModLoader();
+            labels[i] = name + "  •  " + instance.getGameVersion()
+                    + (loader == null ? "" : "  •  " + loader);
+        }
+
+        String title = "mod".equals(projectType)
+                ? "Choose a Fabric Minecraft version"
+                : "Choose Minecraft version";
+        new AlertDialog.Builder(requireContext())
+                .setTitle(title)
+                .setItems(labels, (dialog, which) -> {
+                    Instance selected = choices.get(which);
+                    Bundle args = new Bundle();
+                    args.putString(SearchModFragment.ARG_INSTANCE_ID, Instances.getInstanceId(selected));
+                    args.putString(SearchModFragment.ARG_GAME_VERSION, selected.getGameVersion());
+                    args.putString(SearchModFragment.ARG_LOADER,
+                            "mod".equals(projectType) ? "fabric"
+                                    : ("resourcepack".equals(projectType) ? "minecraft" : null));
+                    Tools.swapFragment(requireActivity(), destination, fragmentTag, args);
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+    }
 
     private void openAddonDirectory(Context context, String folderName) {
         Instance instance = Instances.loadSelectedInstance();
