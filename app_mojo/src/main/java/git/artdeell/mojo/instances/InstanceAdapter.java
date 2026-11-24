@@ -79,12 +79,16 @@ public class InstanceAdapter extends BaseAdapter {
         // We consider "New" the same as putting no name at all
 
         String profileName = Tools.validOrNullString(i.name);
-        String versionName = Tools.validOrNullString(i.versionId);
+        String versionName = Tools.validOrNullString(i.getGameVersion());
 
         if (Instance.VERSION_LATEST_RELEASE.equalsIgnoreCase(versionName))
             versionName = v.getContext().getString(R.string.profiles_latest_release);
         else if (Instance.VERSION_LATEST_SNAPSHOT.equalsIgnoreCase(versionName))
             versionName = v.getContext().getString(R.string.profiles_latest_snapshot);
+
+        String loaderName = Tools.validOrNullString(i.getModLoader());
+        if (loaderName != null && versionName != null)
+            versionName = versionName + " (" + loaderName + ")";
 
         if (versionName == null && profileName != null)
             extendedTextView.setText(profileName);
