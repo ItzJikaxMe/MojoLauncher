@@ -154,7 +154,7 @@ public class ModrinthApi implements ModpackApi{
             supportedGameVersions.add(supportedVersions);
             JsonObject primaryFile = files.get(primaryIndex).getAsJsonObject();
             names.add(version.get("name").getAsString());
-            mcNames.add(compatibleVersion);
+            mcNames.add(mTargetGameVersion != null ? mTargetGameVersion : compatibleVersion);
             urls.add(primaryFile.get("url").getAsString());
             fileNames.add(primaryFile.get("filename").getAsString());
             JsonObject hashesMap = primaryFile.has("hashes") && primaryFile.get("hashes").isJsonObject()
