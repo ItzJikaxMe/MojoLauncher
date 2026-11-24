@@ -43,8 +43,17 @@ import java.util.zip.ZipFile;
 
 public class ModrinthApi implements ModpackApi{
     private final ApiHandler mApiHandler;
-    public ModrinthApi(){
+    private final String mTargetGameVersion;
+    private final String mTargetLoader;
+
+    public ModrinthApi() {
+        this(null, null);
+    }
+
+    public ModrinthApi(String targetGameVersion, String targetLoader) {
         mApiHandler = new ApiHandler("https://api.modrinth.com/v2");
+        mTargetGameVersion = targetGameVersion;
+        mTargetLoader = targetLoader;
     }
 
     @Override
@@ -66,6 +75,8 @@ public class ModrinthApi implements ModpackApi{
         StringBuilder facetString = new StringBuilder();
         facetString.append("[");
         facetString.append(String.format("[\"project_type:%s\"]", searchFilters.projectType != null ? searchFilters.projectType : (searchFilters.isModpack ? "modpack" : "mod")));
+        if (searchFilters.loader != null && !searchFilters.loader.isEmpty())
+            facetString.append(String.format(",[\"categories:%s\"]", searchFilters.loader));
         if(searchFilters.mcVersion != null && !searchFilters.mcVersion.isEmpty())
             facetString.append(String.format(",[\"versions:%s\"]", searchFilters.mcVersion));
         facetString.append("]");
@@ -104,10 +115,16 @@ public class ModrinthApi implements ModpackApi{
 
     @Override
     public ModDetail getModDetails(ModItem item) {
-        JsonArray response = mApiHandler.get(String.format("project/%s/version", item.id), JsonArray.class);
-        if (response == null) return null;
+        HashMap<String, Object> versionFilters = new HashMap<>();
+        if (mTargetGameVersion != null && !mTargetGameVersion.trim().isEmpty())
+            versionFilters.put("game_versions", "[\"" + mTargetGameVersion + "\"]");
+        if (mTargetLoader != null && !mTargetLoader.trim().isEmpty())
+            versionFilters.put("loaders", "[\"" + mTargetLoader + "\"]");
 
-        String targetMinecraftVersion = null;
+        JsonArray response = versionFilters.isEmpty()
+                ? mApiHandler.get(String.format("project/%s/version", item.id), JsonArray.class)
+                : mApiHandler.get(String.format("project/%s/version", item.id), versionFilters, JsonArray.class);
+        if (response == null) return null;
 
         ArrayList<String> names = new ArrayList<>();
         ArrayList<String> mcNames = new ArrayList<>();
@@ -124,8 +141,6 @@ public class ModrinthApi implements ModpackApi{
             String[] supportedVersions = new String[gameVersions.size()];
             for (int versionIndex = 0; versionIndex < gameVersions.size(); versionIndex++)
                 supportedVersions[versionIndex] = gameVersions.get(versionIndex).getAsString();
-            if (targetMinecraftVersion != null && !gameVersions.toString().contains("\"" + targetMinecraftVersion + "\"")) continue;
-
             JsonArray files = version.getAsJsonArray("files");
             if (files == null || files.size() == 0) continue;
             int primaryIndex = 0;
