@@ -570,4 +570,7 @@
     <string name="launcher_mods">Mods</string>
     <string name="launcher_shaders">Shaders</string>
     <string name="launcher_resourcepacks">Resource Packs</string>
+    <string name="hint_search_addons">Search Modrinth projects</string>
+    <string name="search_addons_no_result">No projects found for this Minecraft version</string>
+    <string name="search_addons_error">Failed to load projects</string>
 </resources>
