@@ -62,6 +62,7 @@ public class MainMenuFragment extends Fragment {
         Button mModsButton = view.findViewById(R.id.mods_button);
         Button mShadersButton = view.findViewById(R.id.shaders_button);
         Button mResourcePacksButton = view.findViewById(R.id.resourcepacks_button);
+        Button mSkinsCapesButton = view.findViewById(R.id.skins_capes_button);
 
         ImageButton mEditProfileButton = view.findViewById(R.id.edit_profile_button);
         Button mPlayButton = view.findViewById(R.id.play_button);
@@ -85,6 +86,8 @@ public class MainMenuFragment extends Fragment {
                 "shader", SearchShadersFragment.class, SearchShadersFragment.TAG));
         mResourcePacksButton.setOnClickListener(v -> chooseAddonInstance(
                 "resourcepack", SearchResourcePacksFragment.class, SearchResourcePacksFragment.TAG));
+        mSkinsCapesButton.setOnClickListener(v -> Tools.swapFragment(
+                requireActivity(), SkinCapeFragment.class, "SkinCapeFragment", null));
 
 
         mNewsButton.setOnLongClickListener((v)->{
