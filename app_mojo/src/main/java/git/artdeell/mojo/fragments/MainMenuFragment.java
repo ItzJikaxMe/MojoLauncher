@@ -68,8 +68,8 @@ public class MainMenuFragment extends Fragment {
         Button mPlayButton = view.findViewById(R.id.play_button);
         mVersionSpinner = view.findViewById(R.id.mc_version_spinner);
 
-        mNewsButton.setOnClickListener(v -> Tools.openURL(requireActivity(), Tools.URL_HOME));
-        mDiscordButton.setOnClickListener(v -> Tools.openURL(requireActivity(), getString(R.string.social_media_invite)));
+        mNewsButton.setOnClickListener(v -> showAboutApp());
+        mDiscordButton.setOnClickListener(v -> Tools.openURL(requireActivity(), "https://youtube.com/@immortallauncher?si=2mDw7nT4wpB9DIMy"));
         mCustomControlButton.setOnClickListener(v -> startActivity(new Intent(requireContext(), CustomControlsActivity.class)));
         mInstallJarButton.setOnClickListener(v -> runInstallerWithConfirmation());
         mEditProfileButton.setOnClickListener(v -> mVersionSpinner.openProfileEditor(requireActivity()));
@@ -89,13 +89,19 @@ public class MainMenuFragment extends Fragment {
         mSkinsCapesButton.setOnClickListener(v -> Tools.swapFragment(
                 requireActivity(), SkinCapeFragment.class, "SkinCapeFragment", null));
 
-
-        mNewsButton.setOnLongClickListener((v)->{
-            Tools.swapFragment(requireActivity(), GamepadMapperFragment.class, GamepadMapperFragment.TAG, null);
-            return true;
-        });
     }
 
+
+    private void showAboutApp() {
+        new AlertDialog.Builder(requireContext())
+                .setTitle("About this app")
+                .setMessage("Immortal Launcher is your Minecraft launcher on Android.\\n\\n"
+                        + "Manage game versions, mods, shaders, resource packs, skins and capes.\\n\\n"
+                        + "App owner: JikaxMc\\n\\n"
+                        + "More information will be added soon.")
+                .setPositiveButton(android.R.string.ok, null)
+                .show();
+    }
 
     private void chooseAddonInstance(String projectType,
                                      Class<? extends Fragment> destination,
