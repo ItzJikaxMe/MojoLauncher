@@ -37,8 +37,6 @@ import git.artdeell.mojo.modding.modpacks.api.ModpackApi;
 import git.artdeell.mojo.modding.modpacks.api.ModrinthApi;
 import git.artdeell.mojo.modding.modpacks.models.SearchFilters;
 import git.artdeell.mojo.utils.profiles.VersionSelectorDialog;
-import git.artdeell.mojo.instances.Instance;
-import git.artdeell.mojo.instances.Instances;
 import git.artdeell.mojo.progresskeeper.ProgressKeeper;
 import git.artdeell.mojo.progresskeeper.TaskCountListener;
 
@@ -124,8 +122,6 @@ public class SearchModFragment extends Fragment implements ModItemAdapter.Search
         mSearchFilters = new SearchFilters();
         mSearchFilters.projectType = projectType;
         mSearchFilters.isModpack = "modpack".equals(projectType);
-        Instance selectedInstance = Instances.loadSelectedInstance();
-        if (selectedInstance != null) mSearchFilters.mcVersion = selectedInstance.versionId;
     }
 
     @Override
