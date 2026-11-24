@@ -149,6 +149,7 @@ public class ModrinthApi implements ModpackApi{
 
     @Override
     public void handleProjectInstallation(Context context, ModDetail detail, int selectedVersion) {
+        if (!ProgressLayout.ensureNoOngoingTasks(context)) return;
         if ("modpack".equals(detail.projectType)) {
             ModpackApi.super.handleProjectInstallation(context, detail, selectedVersion);
             return;
