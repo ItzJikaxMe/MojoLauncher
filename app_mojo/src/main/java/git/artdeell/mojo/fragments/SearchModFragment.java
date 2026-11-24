@@ -162,7 +162,13 @@ public class SearchModFragment extends Fragment implements ModItemAdapter.Search
 
         mOverlay = view.findViewById(R.id.search_mod_overlay);
         mSearchEditText = view.findViewById(R.id.search_mod_edittext);
-        if (!"modpack".equals(projectType)) mSearchEditText.setHint(R.string.hint_search_addons);
+        if (!"modpack".equals(projectType)) {
+            String category = "mod".equals(projectType) ? "Mods"
+                    : ("shader".equals(projectType) ? "Shaders" : "Resource Packs");
+            String compatibility = "Minecraft " + targetGameVersion;
+            if (targetLoader != null && "fabric".equals(targetLoader)) compatibility += " • Fabric";
+            mSearchEditText.setHint("Search " + category + " for " + compatibility);
+        }
         mSearchProgressBar = view.findViewById(R.id.search_mod_progressbar);
         mRecyclerview = view.findViewById(R.id.search_mod_list);
         mStatusTextView = view.findViewById(R.id.search_mod_status_text);
