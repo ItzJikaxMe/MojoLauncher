@@ -2,6 +2,14 @@ package git.artdeell.mojo.modding.modpacks.api;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import android.content.Context;
+import android.widget.Toast;
+import git.artdeell.mojo.instances.Instance;
+import git.artdeell.mojo.instances.Instances;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import com.kdt.mcgui.ProgressLayout;
 
 import git.artdeell.mojo.R;
@@ -76,14 +84,16 @@ public class ModrinthApi implements ModpackApi{
         ModItem[] items = new ModItem[responseHits.size()];
         for(int i=0; i<responseHits.size(); ++i){
             JsonObject hit = responseHits.get(i).getAsJsonObject();
+            String projectType = hit.get("project_type").getAsString();
             items[i] = new ModItem(
                     Constants.SOURCE_MODRINTH,
-                    hit.get("project_type").getAsString().equals("modpack"),
+                    projectType.equals("modpack"),
                     hit.get("project_id").getAsString(),
                     hit.get("title").getAsString(),
                     hit.get("description").getAsString(),
-                    hit.get("icon_url").getAsString()
+                    hit.has("icon_url") && !hit.get("icon_url").isJsonNull() ? hit.get("icon_url").getAsString() : null
             );
+            items[i].projectType = projectType;
         }
         if(modrinthSearchResult == null) modrinthSearchResult = new ModrinthSearchResult();
         modrinthSearchResult.previousOffset += responseHits.size();
@@ -102,15 +112,27 @@ public class ModrinthApi implements ModpackApi{
         String[] mcNames = new String[response.size()];
         String[] urls = new String[response.size()];
         String[] hashes = new String[response.size()];
+        String[] fileNames = new String[response.size()];
 
         for (int i=0; i<response.size(); ++i) {
             JsonObject version = response.get(i).getAsJsonObject();
             names[i] = version.get("name").getAsString();
             mcNames[i] = version.get("game_versions").getAsJsonArray().get(0).getAsString();
-            urls[i] = version.get("files").getAsJsonArray().get(0).getAsJsonObject().get("url").getAsString();
+            JsonArray files = version.getAsJsonArray("files");
+            int primaryIndex = 0;
+            for (int fileIndex = 0; fileIndex < files.size(); fileIndex++) {
+                JsonObject candidate = files.get(fileIndex).getAsJsonObject();
+                if (candidate.has("primary") && candidate.get("primary").getAsBoolean()) {
+                    primaryIndex = fileIndex;
+                    break;
+                }
+            }
+            JsonObject primaryFile = files.get(primaryIndex).getAsJsonObject();
+            urls[i] = primaryFile.get("url").getAsString();
+            fileNames[i] = primaryFile.get("filename").getAsString();
             // Assume there may not be hashes, in case the API changes
-            JsonObject hashesMap = version.getAsJsonArray("files").get(0).getAsJsonObject()
-                    .get("hashes").getAsJsonObject();
+            JsonObject hashesMap = primaryFile.has("hashes") && primaryFile.get("hashes").isJsonObject()
+                    ? primaryFile.getAsJsonObject("hashes") : null;
             if(hashesMap == null || hashesMap.get("sha1") == null){
                 hashes[i] = null;
                 continue;
@@ -119,7 +141,75 @@ public class ModrinthApi implements ModpackApi{
             hashes[i] = hashesMap.get("sha1").getAsString();
         }
 
-        return new ModDetail(item, names, mcNames, urls, hashes);
+        ModDetail detail = new ModDetail(item, names, mcNames, urls, hashes);
+        detail.versionFileNames = fileNames;
+        return detail;
+    }
+
+
+    @Override
+    public void handleProjectInstallation(Context context, ModDetail detail, int selectedVersion) {
+        if ("modpack".equals(detail.projectType)) {
+            ModpackApi.super.handleProjectInstallation(context, detail, selectedVersion);
+            return;
+        }
+        ProgressLayout.setProgress(ProgressLayout.INSTALL_MODPACK, 0, R.string.global_waiting);
+        git.artdeell.mojo.MojoApplication.sExecutorService.execute(() -> {
+            try {
+                Instance instance = Instances.loadSelectedInstance();
+                if (instance == null) throw new IOException("No Minecraft instance selected");
+                String folderName;
+                switch (detail.projectType) {
+                    case "mod": folderName = "mods"; break;
+                    case "shader": folderName = "shaderpacks"; break;
+                    case "resourcepack": folderName = "resourcepacks"; break;
+                    default: throw new IOException("Unsupported Modrinth project type: " + detail.projectType);
+                }
+                if (selectedVersion < 0 || selectedVersion >= detail.versionUrls.length)
+                    throw new IOException("Invalid project version selected");
+                File destinationDirectory = new File(instance.getGameDirectory(), folderName);
+                FileUtils.ensureDirectory(destinationDirectory);
+                String fileName = detail.versionFileNames[selectedVersion];
+                if (fileName == null || fileName.trim().isEmpty()) {
+                    fileName = new File(new URL(detail.versionUrls[selectedVersion]).getPath()).getName();
+                }
+                fileName = new File(fileName).getName();
+                File destination = new File(destinationDirectory, fileName);
+                if (destination.exists()) {
+                    String base = fileName;
+                    int dot = fileName.lastIndexOf('.');
+                    String extension = dot > 0 ? fileName.substring(dot) : "";
+                    if (dot > 0) base = fileName.substring(0, dot);
+                    int suffix = 2;
+                    do {
+                        destination = new File(destinationDirectory, base + " (" + suffix++ + ")" + extension);
+                    } while (destination.exists());
+                }
+                HttpURLConnection connection = (HttpURLConnection) new URL(detail.versionUrls[selectedVersion]).openConnection();
+                connection.setConnectTimeout(15000);
+                connection.setReadTimeout(30000);
+                connection.setInstanceFollowRedirects(true);
+                connection.connect();
+                if (connection.getResponseCode() < 200 || connection.getResponseCode() >= 300)
+                    throw new IOException("Download failed: HTTP " + connection.getResponseCode());
+                try (InputStream input = connection.getInputStream();
+                     FileOutputStream output = new FileOutputStream(destination)) {
+                    byte[] buffer = new byte[8192];
+                    int count;
+                    while ((count = input.read(buffer)) != -1) output.write(buffer, 0, count);
+                    output.flush();
+                } finally {
+                    connection.disconnect();
+                }
+                Tools.runOnUiThread(() -> Toast.makeText(context,
+                        context.getString(R.string.generic_install) + ": " + fileName,
+                        Toast.LENGTH_LONG).show());
+            } catch (Exception e) {
+                Tools.showErrorRemote(context, R.string.modpack_install_download_failed, e);
+            } finally {
+                ProgressLayout.clearProgress(ProgressLayout.INSTALL_MODPACK);
+            }
+        });
     }
 
     @Override
