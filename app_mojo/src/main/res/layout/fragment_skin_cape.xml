@@ -3,54 +3,110 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:paddingStart="18dp"
+    android:paddingEnd="18dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="12dp"
     android:background="@color/background_app">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SKINS &amp; CAPES"
+        android:text="YOUR LOOK"
         android:textColor="@color/primary_text"
-        android:textSize="22sp"
+        android:textSize="24sp"
+        android:fontFamily="sans"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Customize your character"
+        android:textColor="@color/secondary_text"
+        android:textSize="14sp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="14dp"
+        android:background="@drawable/bg_skin_preview"
+        android:clipToOutline="true">
+
+        <WebView
+            android:id="@+id/skin_cape_preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#151020" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="12dp"
+            android:text="DRAG TO ROTATE  •  PINCH TO ZOOM"
+            android:textColor="#BFAED4"
+            android:textSize="10sp"
+            android:letterSpacing="0.08" />
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CUSTOMIZE"
+        android:textColor="@color/secondary_text"
+        android:textSize="11sp"
         android:textStyle="bold"
+        android:letterSpacing="0.12"
         android:paddingBottom="8dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/skin_choose_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_skin_action"
+            android:text="Choose Skin"
+            android:textAllCaps="false"
+            android:textColor="@color/primary_text"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/cape_choose_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/bg_skin_action"
+            android:text="Choose Cape"
+            android:textAllCaps="false"
+            android:textColor="@color/primary_text"
+            android:textStyle="bold" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/skin_cape_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Import a PNG skin or cape to preview it in 3D."
+        android:layout_marginTop="12dp"
+        android:padding="12dp"
+        android:background="@drawable/bg_skin_status"
+        android:text="Your selections are saved automatically."
         android:textColor="@color/secondary_text"
-        android:textSize="13sp"
-        android:paddingBottom="10dp" />
-    <WebView
-        android:id="@+id/skin_cape_preview"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:paddingTop="12dp">
-        <Button
-            android:id="@+id/skin_choose_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Choose Skin PNG" />
-        <Button
-            android:id="@+id/cape_choose_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="8dp"
-            android:text="Choose Cape PNG" />
-    </LinearLayout>
+        android:textSize="12sp" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Local preview and storage only. Showing an offline skin to other players requires compatible server-side support."
-        android:textColor="@color/secondary_text"
-        android:textSize="11sp"
-        android:paddingTop="8dp" />
+        android:layout_marginTop="8dp"
+        android:text="Local skins appear to you in game with CustomSkinLoader. Other players need compatible skin support too."
+        android:textColor="#887B99"
+        android:textSize="10sp" />
 </LinearLayout>
