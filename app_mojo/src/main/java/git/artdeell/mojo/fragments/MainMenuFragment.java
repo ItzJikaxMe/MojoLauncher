@@ -55,6 +55,9 @@ public class MainMenuFragment extends Fragment {
         Button mShareLogsButton = view.findViewById(R.id.share_logs_button);
         Button mOpenDirectoryButton = view.findViewById(R.id.open_files_button);
         Button mModpacksButton = view.findViewById(R.id.modpacks_button);
+        Button mModsButton = view.findViewById(R.id.mods_button);
+        Button mShadersButton = view.findViewById(R.id.shaders_button);
+        Button mResourcePacksButton = view.findViewById(R.id.resourcepacks_button);
 
         ImageButton mEditProfileButton = view.findViewById(R.id.edit_profile_button);
         Button mPlayButton = view.findViewById(R.id.play_button);
@@ -72,12 +75,30 @@ public class MainMenuFragment extends Fragment {
 
         mOpenDirectoryButton.setOnClickListener((v)-> openGameDirectory(v.getContext()));
         mModpacksButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), SearchModFragment.class, SearchModFragment.TAG, null));
+        mModsButton.setOnClickListener(v -> openAddonDirectory(requireContext(), "mods"));
+        mShadersButton.setOnClickListener(v -> openAddonDirectory(requireContext(), "shaderpacks"));
+        mResourcePacksButton.setOnClickListener(v -> openAddonDirectory(requireContext(), "resourcepacks"));
 
 
         mNewsButton.setOnLongClickListener((v)->{
             Tools.swapFragment(requireActivity(), GamepadMapperFragment.class, GamepadMapperFragment.TAG, null);
             return true;
         });
+    }
+
+
+    private void openAddonDirectory(Context context, String folderName) {
+        Instance instance = Instances.loadSelectedInstance();
+        if(instance == null) {
+            Toast.makeText(context, R.string.no_instance, Toast.LENGTH_LONG).show();
+            return;
+        }
+        File directory = new File(instance.getGameDirectory(), folderName);
+        if(FileUtils.ensureDirectorySilently(directory)) {
+            openPath(context, directory, false);
+        } else {
+            Toast.makeText(context, R.string.gamedir_open_failed, Toast.LENGTH_LONG).show();
+        }
     }
 
     private void openGameDirectory(Context context) {
