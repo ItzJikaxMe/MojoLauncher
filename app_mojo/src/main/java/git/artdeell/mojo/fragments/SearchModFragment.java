@@ -34,6 +34,7 @@ import git.artdeell.mojo.Tools;
 import git.artdeell.mojo.modding.modpacks.ModItemAdapter;
 import git.artdeell.mojo.modding.modpacks.api.CommonApi;
 import git.artdeell.mojo.modding.modpacks.api.ModpackApi;
+import git.artdeell.mojo.modding.modpacks.api.ModrinthApi;
 import git.artdeell.mojo.modding.modpacks.models.SearchFilters;
 import git.artdeell.mojo.utils.profiles.VersionSelectorDialog;
 import git.artdeell.mojo.progresskeeper.ProgressKeeper;
@@ -71,6 +72,7 @@ public class SearchModFragment extends Fragment implements ModItemAdapter.Search
     private ModpackApi modpackApi;
 
     private final SearchFilters mSearchFilters;
+    private final String projectType;
 
     private Button mImportButton;
     private TaskCountListener mTaskCountListener;
@@ -110,16 +112,24 @@ public class SearchModFragment extends Fragment implements ModItemAdapter.Search
             }
     }
 
-    public SearchModFragment(){
+    public SearchModFragment() {
+        this("modpack");
+    }
+
+    public SearchModFragment(String projectType) {
         super(R.layout.fragment_mod_search);
+        this.projectType = projectType;
         mSearchFilters = new SearchFilters();
-        mSearchFilters.isModpack = true;
+        mSearchFilters.projectType = projectType;
+        mSearchFilters.isModpack = "modpack".equals(projectType);
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        modpackApi = new CommonApi(context.getString(R.string.curseforge_api_key));
+        modpackApi = "modpack".equals(projectType)
+                ? new CommonApi(context.getString(R.string.curseforge_api_key))
+                : new ModrinthApi();
     }
 
     @Override
@@ -158,6 +168,7 @@ public class SearchModFragment extends Fragment implements ModItemAdapter.Search
         });
         mFilterButton.setOnClickListener(v -> displayFilterDialog());
         mImportButton = view.findViewById(R.id.mineButton_import_local_modpack);
+        if (!"modpack".equals(projectType)) mImportButton.setVisibility(View.GONE);
         mImportButton.setOnClickListener(v -> {
             mImportLauncher.launch("*/*");
         });
