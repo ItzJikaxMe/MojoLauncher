@@ -201,8 +201,9 @@ public class ModrinthApi implements ModpackApi{
                 } finally {
                     connection.disconnect();
                 }
+                final String installedFileName = fileName;
                 Tools.runOnUiThread(() -> Toast.makeText(context,
-                        context.getString(R.string.generic_install) + ": " + fileName,
+                        context.getString(R.string.generic_install) + ": " + installedFileName,
                         Toast.LENGTH_LONG).show());
             } catch (Exception e) {
                 Tools.showErrorRemote(context, R.string.modpack_install_download_failed, e);
