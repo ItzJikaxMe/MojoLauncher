@@ -24,7 +24,10 @@ public class DisplayInstance {
 
     public String getModLoader() {
         if (modLoader != null && !modLoader.trim().isEmpty()) return modLoader;
-        if ("fabric".equals(icon)) return "fabric";
+        if ("fabric".equals(icon)) {
+            if (versionId != null && versionId.startsWith("legacy-fabric")) return "legacy_fabric";
+            return "fabric";
+        }
         if ("quilt".equals(icon)) return "quilt";
         if ("legacy_fabric".equals(icon)) return "legacy_fabric";
         return null;
