@@ -124,7 +124,6 @@ public class ModrinthApi implements ModpackApi{
             String[] supportedVersions = new String[gameVersions.size()];
             for (int versionIndex = 0; versionIndex < gameVersions.size(); versionIndex++)
                 supportedVersions[versionIndex] = gameVersions.get(versionIndex).getAsString();
-            supportedGameVersions.add(supportedVersions);
             if (targetMinecraftVersion != null && !gameVersions.toString().contains("\"" + targetMinecraftVersion + "\"")) continue;
 
             JsonArray files = version.getAsJsonArray("files");
@@ -137,6 +136,7 @@ public class ModrinthApi implements ModpackApi{
                     break;
                 }
             }
+            supportedGameVersions.add(supportedVersions);
             JsonObject primaryFile = files.get(primaryIndex).getAsJsonObject();
             names.add(version.get("name").getAsString());
             mcNames.add(compatibleVersion);
