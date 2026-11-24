@@ -36,6 +36,8 @@ import git.artdeell.mojo.modding.modpacks.api.CommonApi;
 import git.artdeell.mojo.modding.modpacks.api.ModpackApi;
 import git.artdeell.mojo.modding.modpacks.api.ModrinthApi;
 import git.artdeell.mojo.modding.modpacks.models.SearchFilters;
+import git.artdeell.mojo.instances.Instance;
+import git.artdeell.mojo.instances.Instances;
 import git.artdeell.mojo.utils.profiles.VersionSelectorDialog;
 import git.artdeell.mojo.progresskeeper.ProgressKeeper;
 import git.artdeell.mojo.progresskeeper.TaskCountListener;
@@ -52,6 +54,9 @@ import java.io.OutputStream;
 public class SearchModFragment extends Fragment implements ModItemAdapter.SearchResultCallback {
 
     public static final String TAG = "SearchModFragment";
+    public static final String ARG_INSTANCE_ID = "addon_target_instance_id";
+    public static final String ARG_GAME_VERSION = "addon_target_game_version";
+    public static final String ARG_LOADER = "addon_target_loader";
     private View mOverlay;
     private float mOverlayTopCache; // Padding cache reduce resource lookup
 
@@ -73,6 +78,9 @@ public class SearchModFragment extends Fragment implements ModItemAdapter.Search
 
     private final SearchFilters mSearchFilters;
     private final String projectType;
+    private Instance targetInstance;
+    private String targetGameVersion;
+    private String targetLoader;
 
     private Button mImportButton;
     private TaskCountListener mTaskCountListener;
@@ -127,15 +135,27 @@ public class SearchModFragment extends Fragment implements ModItemAdapter.Search
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        modpackApi = "modpack".equals(projectType)
-                ? new CommonApi(context.getString(R.string.curseforge_api_key))
-                : new ModrinthApi();
+        if ("modpack".equals(projectType)) {
+            modpackApi = new CommonApi(context.getString(R.string.curseforge_api_key));
+        } else {
+            Bundle args = getArguments();
+            String instanceId = args == null ? null : args.getString(ARG_INSTANCE_ID);
+            targetGameVersion = args == null ? null : args.getString(ARG_GAME_VERSION);
+            targetLoader = args == null ? null : args.getString(ARG_LOADER);
+            targetInstance = Instances.loadInstanceById(instanceId);
+            if (targetInstance == null || targetGameVersion == null) {
+                Toast.makeText(context, "Choose an installed Minecraft version first.", Toast.LENGTH_LONG).show();
+            }
+            mSearchFilters.mcVersion = targetGameVersion;
+            mSearchFilters.loader = targetLoader;
+            modpackApi = new ModrinthApi(targetGameVersion, targetLoader);
+        }
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         // You can only access resources after attaching to current context
-        mModItemAdapter = new ModItemAdapter(getResources(), modpackApi, this);
+        mModItemAdapter = new ModItemAdapter(getResources(), modpackApi, this, targetInstance);
         ProgressKeeper.addTaskCountListener(mModItemAdapter);
         mOverlayTopCache = getResources().getDimension(R.dimen.fragment_padding_medium);
 
