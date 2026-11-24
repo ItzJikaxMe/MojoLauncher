@@ -37,6 +37,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.ZipFile;
@@ -133,8 +134,17 @@ public class ModrinthApi implements ModpackApi{
         ArrayList<String> fileNames = new ArrayList<>();
         ArrayList<String[]> supportedGameVersions = new ArrayList<>();
 
-        for (int i = 0; i < response.size(); i++) {
-            JsonObject version = response.get(i).getAsJsonObject();
+        ArrayList<JsonObject> orderedVersions = new ArrayList<>(response.size());
+        for (int i = 0; i < response.size(); i++)
+            orderedVersions.add(response.get(i).getAsJsonObject());
+        Collections.sort(orderedVersions, (left, right) -> {
+            String leftDate = left.has("date_published") ? left.get("date_published").getAsString() : "";
+            String rightDate = right.has("date_published") ? right.get("date_published").getAsString() : "";
+            return rightDate.compareTo(leftDate);
+        });
+
+        // The first result is the newest release compatible with the chosen game version and loader.
+        for (JsonObject version : orderedVersions) {
             JsonArray gameVersions = version.getAsJsonArray("game_versions");
             if (gameVersions == null || gameVersions.size() == 0) continue;
             String compatibleVersion = gameVersions.get(0).getAsString();
