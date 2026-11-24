@@ -7,6 +7,8 @@ import org.jetbrains.annotations.Nullable;
  */
 public class SearchFilters {
     public boolean isModpack;
+    /** Modrinth project type: mod, modpack, shader, or resourcepack. */
+    public String projectType;
     public String name;
     @Nullable public String mcVersion;
 
