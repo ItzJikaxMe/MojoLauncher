@@ -108,10 +108,6 @@ public class ModrinthApi implements ModpackApi{
         if (response == null) return null;
 
         String targetMinecraftVersion = null;
-        if (!"modpack".equals(item.projectType)) {
-            Instance selectedInstance = Instances.loadSelectedInstance();
-            if (selectedInstance != null) targetMinecraftVersion = selectedInstance.versionId;
-        }
 
         ArrayList<String> names = new ArrayList<>();
         ArrayList<String> mcNames = new ArrayList<>();
@@ -124,17 +120,7 @@ public class ModrinthApi implements ModpackApi{
             JsonArray gameVersions = version.getAsJsonArray("game_versions");
             if (gameVersions == null || gameVersions.size() == 0) continue;
             String compatibleVersion = gameVersions.get(0).getAsString();
-            if (targetMinecraftVersion != null) {
-                boolean matches = false;
-                for (int j = 0; j < gameVersions.size(); j++) {
-                    if (targetMinecraftVersion.equals(gameVersions.get(j).getAsString())) {
-                        matches = true;
-                        compatibleVersion = targetMinecraftVersion;
-                        break;
-                    }
-                }
-                if (!matches) continue;
-            }
+            if (targetMinecraftVersion != null && !gameVersions.toString().contains("\"" + targetMinecraftVersion + "\"")) continue;
 
             JsonArray files = version.getAsJsonArray("files");
             if (files == null || files.size() == 0) continue;
@@ -169,6 +155,11 @@ public class ModrinthApi implements ModpackApi{
 
     @Override
     public void handleProjectInstallation(Context context, ModDetail detail, int selectedVersion) {
+        handleProjectInstallation(context, detail, selectedVersion, Instances.loadSelectedInstance());
+    }
+
+    @Override
+    public void handleProjectInstallation(Context context, ModDetail detail, int selectedVersion, Instance targetInstance) {
         if (!ProgressLayout.ensureNoOngoingTasks(context)) return;
         if ("modpack".equals(detail.projectType)) {
             ModpackApi.super.handleProjectInstallation(context, detail, selectedVersion);
@@ -177,7 +168,7 @@ public class ModrinthApi implements ModpackApi{
         ProgressLayout.setProgress(ProgressLayout.INSTALL_MODPACK, 0, R.string.global_waiting);
         git.artdeell.mojo.MojoApplication.sExecutorService.execute(() -> {
             try {
-                Instance instance = Instances.loadSelectedInstance();
+                Instance instance = targetInstance;
                 if (instance == null) throw new IOException("No Minecraft instance selected");
                 String folderName;
                 switch (detail.projectType) {
