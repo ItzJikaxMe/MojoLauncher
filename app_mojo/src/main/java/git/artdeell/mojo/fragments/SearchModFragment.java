@@ -145,6 +145,7 @@ public class SearchModFragment extends Fragment implements ModItemAdapter.Search
 
         mOverlay = view.findViewById(R.id.search_mod_overlay);
         mSearchEditText = view.findViewById(R.id.search_mod_edittext);
+        if (!"modpack".equals(projectType)) mSearchEditText.setHint(R.string.hint_search_addons);
         mSearchProgressBar = view.findViewById(R.id.search_mod_progressbar);
         mRecyclerview = view.findViewById(R.id.search_mod_list);
         mStatusTextView = view.findViewById(R.id.search_mod_status_text);
@@ -209,11 +210,11 @@ public class SearchModFragment extends Fragment implements ModItemAdapter.Search
         switch (error) {
             case ERROR_INTERNAL:
                 mStatusTextView.setTextColor(Color.RED);
-                mStatusTextView.setText(R.string.search_modpack_error);
+                mStatusTextView.setText("modpack".equals(projectType) ? R.string.search_modpack_error : R.string.search_addons_error);
                 break;
             case ERROR_NO_RESULTS:
                 mStatusTextView.setTextColor(mDefaultTextColor);
-                mStatusTextView.setText(R.string.search_modpack_no_result);
+                mStatusTextView.setText("modpack".equals(projectType) ? R.string.search_modpack_no_result : R.string.search_addons_no_result);
                 break;
         }
     }
