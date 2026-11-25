@@ -14,4 +14,11 @@
     <color name="primary_text">#F3FAFF</color>
     <color name="secondary_text">#91A6B7</color>
     <color name="accent_soft">#8AF0D8</color>
+    <color name="gold_primary">#D8AA4A</color>
+    <color name="gold_soft">#F1CF7A</color>
+    <color name="gold_muted">#98743A</color>
+    <color name="gold_divider">#665A4024</color>
+    <color name="nav_item_background">#142232</color>
+    <color name="nav_item_selected_start">#65501F</color>
+    <color name="nav_item_selected_end">#342A1B</color>
 </resources>
