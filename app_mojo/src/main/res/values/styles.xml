@@ -86,19 +86,21 @@
 
     <style name="LauncherNavItem">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">36dp</item>
-        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
         <item name="android:background">@drawable/launcher_nav_item</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:paddingStart">9dp</item>
-        <item name="android:paddingEnd">5dp</item>
-        <item name="android:drawablePadding">8dp</item>
-        <item name="android:drawableTint">@color/gold_muted</item>
+        <item name="android:paddingStart">7dp</item>
+        <item name="android:paddingEnd">3dp</item>
+        <item name="android:drawablePadding">6dp</item>
+        <item name="android:drawableTint">@color/gold_soft</item>
         <item name="android:textColor">@color/primary_text</item>
-        <item name="android:textSize">11sp</item>
+        <item name="android:textSize">9sp</item>
         <item name="android:fontFamily">sans</item>
         <item name="android:textStyle">bold</item>
         <item name="android:includeFontPadding">false</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
     </style>
     <item name="dimension_tracker" type="id" />
     <style name="DimensionTracker">
