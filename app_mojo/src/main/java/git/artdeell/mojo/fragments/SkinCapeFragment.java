@@ -26,6 +26,8 @@ import git.artdeell.mojo.authenticator.accounts.Account;
 import git.artdeell.mojo.authenticator.accounts.Accounts;
 import git.artdeell.mojo.instances.Instance;
 import git.artdeell.mojo.instances.Instances;
+import git.artdeell.mojo.extra.ExtraConstants;
+import git.artdeell.mojo.extra.ExtraCore;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -150,8 +152,12 @@ public class SkinCapeFragment extends Fragment {
             File appTarget = new File(appFolder, pendingType + ".png");
             try (FileOutputStream file = new FileOutputStream(appTarget)) { file.write(bytes); }
 
-            if ("skin".equals(pendingType)) savedSkin = appTarget;
-            else savedCape = appTarget;
+            if ("skin".equals(pendingType)) {
+                savedSkin = appTarget;
+                ExtraCore.setValue(ExtraConstants.REFRESH_ACCOUNT_SPINNER, true);
+            } else {
+                savedCape = appTarget;
+            }
 
             String encoded = Base64.encodeToString(bytes, Base64.NO_WRAP);
             String function = "skin".equals(pendingType) ? "showSkin" : "showCape";
