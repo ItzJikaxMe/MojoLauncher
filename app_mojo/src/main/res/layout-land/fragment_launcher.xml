@@ -65,7 +65,7 @@
                     style="@style/LauncherNavItem"
                     android:drawableStart="@drawable/ic_px_java_run"
                     android:text="Play"
-                    android:selected="true" />
+                    />
 
                 <TextView
                     android:id="@+id/nav_mods"
