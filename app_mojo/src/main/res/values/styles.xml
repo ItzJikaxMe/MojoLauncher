@@ -84,6 +84,22 @@
         <item name="android:background">?android:attr/listDivider</item>
     </style>
 
+    <style name="LauncherNavItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:background">@drawable/launcher_nav_item</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">9dp</item>
+        <item name="android:paddingEnd">5dp</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:drawableTint">@color/gold_muted</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:fontFamily">sans</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
     <item name="dimension_tracker" type="id" />
     <style name="DimensionTracker">
         <item name="android:id">@id/dimension_tracker</item>
