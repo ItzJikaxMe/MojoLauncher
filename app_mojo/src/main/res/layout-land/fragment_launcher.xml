@@ -5,18 +5,18 @@
     android:id="@+id/fragment_menu_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_app">
+    android:background="@color/launcher_background">
 
     <LinearLayout
         android:id="@+id/home_sidebar"
-        android:layout_width="@dimen/_112sdp"
+        android:layout_width="@dimen/_110sdp"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@drawable/nav_sidebar_background"
-        android:paddingStart="6dp"
-        android:paddingEnd="6dp"
-        android:paddingTop="7dp"
-        android:paddingBottom="5dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
@@ -24,35 +24,35 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="9dp"
+            android:paddingStart="6dp"
             android:paddingBottom="2dp"
             android:text="GAME MENU"
-            android:textColor="@color/gold_primary"
-            android:textSize="10sp"
+            android:textColor="@color/launcher_green_bright"
+            android:textSize="9sp"
             android:textStyle="bold"
-            android:letterSpacing="0.16" />
+            android:letterSpacing="0.10" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="9dp"
-            android:paddingBottom="8dp"
+            android:paddingStart="6dp"
+            android:paddingBottom="6dp"
             android:text="Choose your destination"
-            android:textColor="@color/secondary_text"
-            android:textSize="9sp" />
+            android:textColor="@color/launcher_muted"
+            android:textSize="8sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginHorizontal="6dp"
-            android:layout_marginBottom="7dp"
-            android:background="@color/gold_divider" />
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginBottom="6dp"
+            android:background="@color/launcher_panel_border" />
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:fillViewport="true"
+            android:fillViewport="false"
             android:overScrollMode="never">
 
             <LinearLayout
@@ -60,82 +60,177 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:id="@+id/nav_play"
-                    style="@style/LauncherNavItem"
-                    android:drawableStart="@drawable/ic_px_java_run"
-                    android:text="Play"
-                    />
+                    style="@style/LauncherNavCard">
+                    <FrameLayout
+                        android:layout_width="21dp"
+                        android:layout_height="21dp"
+                        android:background="@drawable/nav_icon_tile">
+                        <ImageView
+                            android:layout_width="13dp"
+                            android:layout_height="13dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_px_java_run"
+                            android:tint="@color/launcher_green_bright"
+                            android:scaleType="fitCenter" />
+                    </FrameLayout>
+                    <TextView style="@style/LauncherNavLabel" android:layout_marginStart="5dp" android:text="Play" />
+                </LinearLayout>
 
-                <TextView
+                <LinearLayout
                     android:id="@+id/nav_mods"
-                    style="@style/LauncherNavItem"
-                    android:drawableStart="@drawable/ic_px_file"
-                    android:text="Mods"  />
+                    style="@style/LauncherNavCard">
+                    <FrameLayout
+                        android:layout_width="21dp"
+                        android:layout_height="21dp"
+                        android:background="@drawable/nav_icon_tile">
+                        <ImageView
+                            android:layout_width="13dp"
+                            android:layout_height="13dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_px_file"
+                            android:tint="@color/launcher_green_bright"
+                            android:scaleType="fitCenter" />
+                    </FrameLayout>
+                    <TextView style="@style/LauncherNavLabel" android:layout_marginStart="5dp" android:text="Mods" />
+                </LinearLayout>
 
-                <TextView
+                <LinearLayout
                     android:id="@+id/nav_resourcepacks"
-                    style="@style/LauncherNavItem"
-                    android:drawableStart="@drawable/ic_px_image"
-                    android:text="Resource Packs"  />
+                    style="@style/LauncherNavCard">
+                    <FrameLayout
+                        android:layout_width="21dp"
+                        android:layout_height="21dp"
+                        android:background="@drawable/nav_icon_tile">
+                        <ImageView
+                            android:layout_width="13dp"
+                            android:layout_height="13dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_px_image"
+                            android:tint="@color/launcher_green_bright"
+                            android:scaleType="fitCenter" />
+                    </FrameLayout>
+                    <TextView style="@style/LauncherNavLabel" android:layout_marginStart="5dp" android:text="Resource Packs" />
+                </LinearLayout>
 
-                <TextView
+                <LinearLayout
                     android:id="@+id/nav_shaders"
-                    style="@style/LauncherNavItem"
-                    android:drawableStart="@drawable/ic_px_experiment"
-                    android:text="Shaders"  />
+                    style="@style/LauncherNavCard">
+                    <FrameLayout
+                        android:layout_width="21dp"
+                        android:layout_height="21dp"
+                        android:background="@drawable/nav_icon_tile">
+                        <ImageView
+                            android:layout_width="13dp"
+                            android:layout_height="13dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_px_experiment"
+                            android:tint="@color/launcher_green_bright"
+                            android:scaleType="fitCenter" />
+                    </FrameLayout>
+                    <TextView style="@style/LauncherNavLabel" android:layout_marginStart="5dp" android:text="Shaders" />
+                </LinearLayout>
 
-                <TextView
+                <LinearLayout
                     android:id="@+id/nav_modpacks"
-                    style="@style/LauncherNavItem"
-                    android:drawableStart="@drawable/ic_modrinth"
-                    android:text="Modpacks" />
+                    style="@style/LauncherNavCard">
+                    <FrameLayout
+                        android:layout_width="21dp"
+                        android:layout_height="21dp"
+                        android:background="@drawable/nav_icon_tile">
+                        <ImageView
+                            android:layout_width="13dp"
+                            android:layout_height="13dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_modrinth"
+                            android:tint="@color/launcher_green_bright"
+                            android:scaleType="fitCenter" />
+                    </FrameLayout>
+                    <TextView style="@style/LauncherNavLabel" android:layout_marginStart="5dp" android:text="Modpacks" />
+                </LinearLayout>
 
-                <TextView
+                <LinearLayout
                     android:id="@+id/nav_skins_capes"
-                    style="@style/LauncherNavItem"
-                    android:drawableStart="@drawable/ic_px_image_renderer"
-                    android:text="Skins &amp; Capes"  />
+                    style="@style/LauncherNavCard">
+                    <FrameLayout
+                        android:layout_width="21dp"
+                        android:layout_height="21dp"
+                        android:background="@drawable/nav_icon_tile">
+                        <ImageView
+                            android:layout_width="13dp"
+                            android:layout_height="13dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_px_image_renderer"
+                            android:tint="@color/launcher_green_bright"
+                            android:scaleType="fitCenter" />
+                    </FrameLayout>
+                    <TextView style="@style/LauncherNavLabel" android:layout_marginStart="5dp" android:text="Skins &amp; Capes" />
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginHorizontal="7dp"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginBottom="7dp"
-                    android:background="@color/gold_divider" />
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/launcher_panel_border" />
 
-                <TextView
+                <LinearLayout
                     android:id="@+id/nav_controls"
-                    style="@style/LauncherNavItem"
-                    android:drawableStart="@drawable/ic_px_gamepad"
-                    android:text="Controls" />
+                    style="@style/LauncherNavCard">
+                    <FrameLayout
+                        android:layout_width="21dp"
+                        android:layout_height="21dp"
+                        android:background="@drawable/nav_icon_tile">
+                        <ImageView
+                            android:layout_width="13dp"
+                            android:layout_height="13dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_px_gamepad"
+                            android:tint="@color/launcher_green_bright"
+                            android:scaleType="fitCenter" />
+                    </FrameLayout>
+                    <TextView style="@style/LauncherNavLabel" android:layout_marginStart="5dp" android:text="Controls" />
+                </LinearLayout>
 
-                <TextView
+                <LinearLayout
                     android:id="@+id/nav_more"
-                    style="@style/LauncherNavItem"
-                    android:drawableStart="@drawable/ic_info_outline"
-                    android:text="More" />
+                    style="@style/LauncherNavCard">
+                    <FrameLayout
+                        android:layout_width="21dp"
+                        android:layout_height="21dp"
+                        android:background="@drawable/nav_icon_tile">
+                        <ImageView
+                            android:layout_width="13dp"
+                            android:layout_height="13dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_info_outline"
+                            android:tint="@color/launcher_green_bright"
+                            android:scaleType="fitCenter" />
+                    </FrameLayout>
+                    <TextView style="@style/LauncherNavLabel" android:layout_marginStart="5dp" android:text="More" />
+                </LinearLayout>
             </LinearLayout>
         </ScrollView>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="9dp"
-            android:paddingTop="5dp"
+            android:paddingStart="6dp"
+            android:paddingTop="4dp"
             android:text="JIKAXMC  •  1.0"
-            android:textColor="@color/gold_muted"
-            android:textSize="8sp"
+            android:textColor="@color/launcher_muted"
+            android:textSize="7sp"
             android:textStyle="bold"
-            android:letterSpacing="0.08" />
+            android:letterSpacing="0.06" />
     </LinearLayout>
 
     <FrameLayout
         android:id="@+id/home_main_content"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:padding="9dp"
+        android:padding="6dp"
         app:layout_constraintStart_toEndOf="@id/home_sidebar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -150,23 +245,23 @@
                 android:id="@+id/home_feature_panel"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="6dp"
                 android:background="@drawable/home_play_card"
-                android:padding="17dp"
+                android:padding="12dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/home_version_label"
                 app:layout_constraintHeight_default="percent"
-                app:layout_constraintHeight_percent="0.57">
+                app:layout_constraintHeight_percent="0.52">
 
                 <TextView
                     android:id="@+id/home_hero_eyebrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="MINECRAFT  •  JAVA EDITION"
-                    android:textColor="@color/gold_soft"
-                    android:textSize="10sp"
+                    android:textColor="@color/launcher_green_bright"
+                    android:textSize="8sp"
                     android:textStyle="bold"
-                    android:letterSpacing="0.14"
+                    android:letterSpacing="0.10"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -174,12 +269,12 @@
                     android:id="@+id/home_hero_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="6dp"
                     android:text="YOUR NEXT&#10;ADVENTURE STARTS HERE"
-                    android:textColor="@color/primary_text"
-                    android:textSize="23sp"
+                    android:textColor="@color/launcher_text"
+                    android:textSize="19sp"
                     android:textStyle="bold"
-                    android:letterSpacing="0.025"
+                    android:letterSpacing="0.01"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/home_hero_eyebrow" />
 
@@ -187,65 +282,63 @@
                     android:id="@+id/home_hero_caption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="5dp"
                     android:text="Choose a version, prepare your world, and play."
-                    android:textColor="@color/secondary_text"
-                    android:textSize="11sp"
+                    android:textColor="@color/launcher_muted"
+                    android:textSize="9sp"
                     app:layout_constraintStart_toStartOf="@id/home_hero_title"
                     app:layout_constraintTop_toBottomOf="@id/home_hero_title" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
-                    android:layout_marginBottom="2dp"
+                    android:layout_marginEnd="8dp"
                     android:text="✦"
-                    android:textColor="@color/gold_primary"
-                    android:textSize="58sp"
+                    android:textColor="@color/launcher_green"
+                    android:textSize="40sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/home_version_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="4dp"
                 android:text="SELECT YOUR GAME VERSION"
-                android:textColor="@color/gold_soft"
-                android:textSize="10sp"
+                android:textColor="@color/launcher_green_bright"
+                android:textSize="8sp"
                 android:textStyle="bold"
-                android:letterSpacing="0.10"
+                android:letterSpacing="0.08"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/mc_version_spinner" />
 
             <com.kdt.mcgui.mcVersionSpinner
                 android:id="@+id/mc_version_spinner"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_42sdp"
+                android:layout_height="34dp"
                 android:background="@drawable/account_header_background"
                 android:drawableEnd="@drawable/spinner_arrow"
-                app:drawableEndSize="@dimen/_12sdp"
+                app:drawableEndSize="10dp"
                 app:drawableStartIntegerScaling="true"
-                app:drawableStartSize="@dimen/_30sdp"
-                app:drawableEndPadding="@dimen/_4sdp"
+                app:drawableStartSize="24dp"
+                app:drawableEndPadding="3dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/edit_profile_button"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
             <ImageButton
                 android:id="@+id/edit_profile_button"
-                android:layout_width="@dimen/_38sdp"
-                android:layout_height="@dimen/_42sdp"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_width="30dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
                 android:background="@drawable/launcher_nav_item"
                 android:contentDescription="Edit selected version"
                 android:src="@drawable/ic_px_edit"
-                android:tint="@color/gold_soft"
-                android:padding="9dp"
+                android:tint="@color/launcher_green_bright"
+                android:padding="7dp"
                 app:layout_constraintStart_toEndOf="@id/mc_version_spinner"
                 app:layout_constraintEnd_toStartOf="@id/add_version_button"
                 app:layout_constraintBottom_toBottomOf="@id/mc_version_spinner"
@@ -253,16 +346,16 @@
 
             <TextView
                 android:id="@+id/add_version_button"
-                android:layout_width="@dimen/_104sdp"
-                android:layout_height="@dimen/_42sdp"
-                android:layout_marginEnd="6dp"
+                android:layout_width="86dp"
+                android:layout_height="34dp"
+                android:layout_marginEnd="5dp"
                 android:background="@drawable/gold_action_button"
                 android:gravity="center"
                 android:text="+  ADD VERSION"
-                android:textColor="@color/background_app"
-                android:textSize="10sp"
+                android:textColor="@color/launcher_text"
+                android:textSize="8sp"
                 android:textStyle="bold"
-                android:letterSpacing="0.04"
+                android:letterSpacing="0.02"
                 app:layout_constraintStart_toEndOf="@id/edit_profile_button"
                 app:layout_constraintEnd_toStartOf="@id/play_button"
                 app:layout_constraintBottom_toBottomOf="@id/mc_version_spinner"
@@ -270,8 +363,8 @@
 
             <com.kdt.mcgui.MineButton
                 android:id="@+id/play_button"
-                android:layout_width="@dimen/_108sdp"
-                android:layout_height="@dimen/_42sdp"
+                android:layout_width="94dp"
+                android:layout_height="34dp"
                 android:text="@string/main_play"
                 android:textAllCaps="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -285,7 +378,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
-            android:background="@color/background_app" />
+            android:background="@color/launcher_background" />
 
     </FrameLayout>
 
