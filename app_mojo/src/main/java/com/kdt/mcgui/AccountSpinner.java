@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -33,6 +34,7 @@ import git.artdeell.mojo.authenticator.AuthType;
 import git.artdeell.mojo.authenticator.BackgroundLogin;
 import git.artdeell.mojo.authenticator.accounts.Accounts;
 import git.artdeell.mojo.authenticator.accounts.Account;
+import git.artdeell.mojo.authenticator.accounts.SkinHeadRenderer;
 import git.artdeell.mojo.authenticator.listener.LoginListener;
 import git.artdeell.mojo.extra.ExtraConstants;
 import git.artdeell.mojo.extra.ExtraCore;
@@ -331,13 +333,30 @@ public class AccountSpinner extends AppCompatSpinner implements LoginListener, A
             int headCacheHash = System.identityHashCode(account);
             BitmapDrawable accountHead = mSkinHeadCache.get(headCacheHash);
             if (accountHead == null){
-                Bitmap accountSkinFace = account.getSkinFace();
-                accountHead = new BitmapDrawable(resources, accountSkinFace);
+                Bitmap accountSkinFace = getDisplayedSkinFace(account);
+                accountHead = accountSkinFace == null
+                        ? null : new BitmapDrawable(resources, accountSkinFace);
                 mSkinHeadCache.put(headCacheHash, accountHead);
             }
 
             textview.setText(account.username);
             textview.setCompoundDrawablesRelative(accountHead, null, authType, null);
+        }
+
+        private Bitmap getDisplayedSkinFace(Account account) {
+            File customSkin = new File(getContext().getFilesDir(), "skins/skin.png");
+            if (customSkin.isFile()) {
+                Bitmap skinTexture = BitmapFactory.decodeFile(customSkin.getAbsolutePath());
+                if (skinTexture != null) {
+                    try {
+                        Bitmap renderedFace = new SkinHeadRenderer().render(100, skinTexture);
+                        if (renderedFace != null) return renderedFace;
+                    } finally {
+                        skinTexture.recycle();
+                    }
+                }
+            }
+            return account.getSkinFace();
         }
 
         private void showDeleteDialog(Context context, int position) {
