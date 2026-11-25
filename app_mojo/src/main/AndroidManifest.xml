@@ -63,6 +63,7 @@
         <activity
             android:name=".LauncherActivity"
             android:label="Immortal Launcher"
+            android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ImportControlActivity"
