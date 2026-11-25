@@ -68,6 +68,11 @@ public class MainMenuFragment extends Fragment {
         View navMore = view.findViewById(R.id.nav_more);
 
         ImageButton editProfileButton = view.findViewById(R.id.edit_profile_button);
+        View youtubeButton = requireActivity().findViewById(R.id.youtube_channel_button);
+        if (youtubeButton != null) {
+            youtubeButton.setOnClickListener(v -> Tools.openURL(requireActivity(),
+                    "https://youtube.com/@immortallauncher?si=2mDw7nT4wpB9DIMy"));
+        }
         View addVersionButton = view.findViewById(R.id.add_version_button);
         View playButton = view.findViewById(R.id.play_button);
 
@@ -142,11 +147,6 @@ public class MainMenuFragment extends Fragment {
         PopupMenu menu = new PopupMenu(requireContext(), anchor);
         menu.getMenu().add("About Immortal Launcher").setOnMenuItemClickListener(item -> {
             showAboutApp();
-            return true;
-        });
-        menu.getMenu().add("YouTube channel").setOnMenuItemClickListener(item -> {
-            Tools.openURL(requireActivity(),
-                    "https://youtube.com/@immortallauncher?si=2mDw7nT4wpB9DIMy");
             return true;
         });
         menu.getMenu().add("Install JAR file").setOnMenuItemClickListener(item -> {
