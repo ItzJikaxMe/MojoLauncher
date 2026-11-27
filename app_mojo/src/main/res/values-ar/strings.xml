@@ -202,7 +202,7 @@
     <string name="pedit_java_runtime">بيئة تشغيل Java</string>
     <string name="pedit_renderer">عارض الرسوميات</string>
     <string name="notif_channel_name">عام</string>
-    <string name="lazy_service_default_title">خدمة MJ في المقدمة</string>
+    <string name="lazy_service_default_title">Vornex Launcher</string>
     <string name="mcl_setting_veroption_installed">مثبت</string>
     <string name="use_global_default">(استخدم الافتراضي العام)</string>
     <string name="default_control">مخطط التحكم الأفتراضي</string>
