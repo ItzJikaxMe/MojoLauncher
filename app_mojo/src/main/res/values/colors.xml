@@ -29,4 +29,5 @@
     <color name="launcher_text">#F4F4F4</color>
     <color name="launcher_muted">#A5A5A5</color>
     <color name="launcher_icon_tile">#26282A</color>
+    <color name="launcher_blue">#78A7FF</color>
 </resources>
