@@ -154,7 +154,7 @@ public class MainMenuFragment extends Fragment {
 
     private void showMoreMenu(View anchor) {
         PopupMenu menu = new PopupMenu(requireContext(), anchor);
-        menu.getMenu().add("About Immortal Launcher").setOnMenuItemClickListener(item -> {
+        menu.getMenu().add("About Vornex Launcher").setOnMenuItemClickListener(item -> {
             showAboutApp();
             return true;
         });
@@ -175,7 +175,7 @@ public class MainMenuFragment extends Fragment {
 
     private void showAboutApp() {
         new AlertDialog.Builder(requireContext())
-                .setTitle("About Immortal Launcher")
+                .setTitle("About Vornex Launcher")
                 .setMessage("Immortal Launcher is your Minecraft Java launcher on Android.\n\n"
                         + "Manage game versions, mods, modpacks, shaders, resource packs, skins and capes.\n\n"
                         + "App owner: JikaxMc")
