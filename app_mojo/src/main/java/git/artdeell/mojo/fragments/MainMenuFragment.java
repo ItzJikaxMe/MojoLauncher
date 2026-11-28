@@ -91,7 +91,10 @@ public class MainMenuFragment extends Fragment {
         setSelectedNavigation(navPlay);
 
         navPlay.setOnClickListener(v -> showPlaySection(navPlay));
-        navMods.setOnClickListener(v -> {\n            setSelectedNavigation(navMods);\n            openGameDirectory(requireContext());\n        });
+        navMods.setOnClickListener(v -> {
+            setSelectedNavigation(navMods);
+            openGameDirectory(requireContext());
+        });
         navModsCard.setOnClickListener(v -> {
             setSelectedNavigation(navPlay);
             showDynamicFragment(new SearchModsFragment(), SearchModsFragment.TAG);
@@ -116,7 +119,10 @@ public class MainMenuFragment extends Fragment {
             setSelectedNavigation(navControls);
             startActivity(new Intent(requireContext(), CustomControlsActivity.class));
         });
-        navMore.setOnClickListener(v -> {\n            setSelectedNavigation(navMore);\n            showMoreMenu(v);\n        });
+        navMore.setOnClickListener(v -> {
+            setSelectedNavigation(navMore);
+            showMoreMenu(v);
+        });
         if (navSettings != null) navSettings.setOnClickListener(v -> {
             setSelectedNavigation(navSettings);
             Tools.swapFragment(requireActivity(), LauncherPreferenceFragment.class,
@@ -206,8 +212,12 @@ public class MainMenuFragment extends Fragment {
     private void showAboutApp() {
         new AlertDialog.Builder(requireContext())
                 .setTitle("About Vornex Launcher")
-                .setMessage("Vornex Launcher is your Minecraft Java launcher on Android.\n\n"
-                        + "Manage game versions, mods, modpacks, shaders, resource packs, skins and capes.\n\n"
+                .setMessage("Vornex Launcher is your Minecraft Java launcher on Android.
+
+"
+                        + "Manage game versions, mods, modpacks, shaders, resource packs, skins and capes.
+
+"
                         + "App owner: JikaxMc")
                 .setPositiveButton(android.R.string.ok, null)
                 .show();
