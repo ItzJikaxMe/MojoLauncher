@@ -4,7 +4,7 @@ import static git.artdeell.mojo.extra.ExtraCore.getValue;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.widget.ExpandableListView;
+import android.view.View;\nimport android.widget.ExpandableListView;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -24,7 +24,7 @@ public class VersionSelectorDialog {
         VersionListAdapter adapter = new VersionListAdapter(versionArray, hideCustomVersions, context);
 
         expandableListView.setAdapter(adapter);
-        builder.setView(expandableListView);
+        builder.setView(content);
         AlertDialog dialog = builder.show();
 
         expandableListView.setOnChildClickListener((parent, v1, groupPosition, childPosition, id) -> {
