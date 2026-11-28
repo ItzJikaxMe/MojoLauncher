@@ -63,6 +63,7 @@ public class MainMenuFragment extends Fragment {
 
         View navPlay = view.findViewById(R.id.nav_play);
         View navMods = view.findViewById(R.id.nav_mods);
+        View navModsCard = view.findViewById(R.id.nav_mods_card);
         View navResourcePacks = view.findViewById(R.id.nav_resourcepacks);
         View navShaders = view.findViewById(R.id.nav_shaders);
         View navModpacks = view.findViewById(R.id.nav_modpacks);
@@ -88,18 +89,18 @@ public class MainMenuFragment extends Fragment {
         setSelectedNavigation(navPlay);
 
         navPlay.setOnClickListener(v -> showPlaySection(navPlay));
-        navMods.setOnClickListener(v -> {
-            setSelectedNavigation(navMods);
-            chooseAddonInstance("mod", SearchModsFragment.class, SearchModsFragment.TAG);
+        navMods.setOnClickListener(v -> openGameDirectory(requireContext()));
+        navModsCard.setOnClickListener(v -> {
+            setSelectedNavigation(navPlay);
+            showDynamicFragment(new SearchModsFragment(), SearchModsFragment.TAG);
         });
         navResourcePacks.setOnClickListener(v -> {
-            setSelectedNavigation(navResourcePacks);
-            chooseAddonInstance("resourcepack", SearchResourcePacksFragment.class,
-                    SearchResourcePacksFragment.TAG);
+            setSelectedNavigation(navPlay);
+            showDynamicFragment(new SearchResourcePacksFragment(), SearchResourcePacksFragment.TAG);
         });
         navShaders.setOnClickListener(v -> {
-            setSelectedNavigation(navShaders);
-            chooseAddonInstance("shader", SearchShadersFragment.class, SearchShadersFragment.TAG);
+            setSelectedNavigation(navPlay);
+            showDynamicFragment(new SearchShadersFragment(), SearchShadersFragment.TAG);
         });
         navModpacks.setOnClickListener(v -> {
             setSelectedNavigation(navModpacks);
@@ -125,10 +126,7 @@ public class MainMenuFragment extends Fragment {
     }
 
     private void setSelectedNavigation(View selected) {
-        int[] ids = {
-                R.id.nav_play, R.id.nav_mods, R.id.nav_resourcepacks, R.id.nav_shaders,
-                R.id.nav_modpacks, R.id.nav_skins_capes, R.id.nav_controls, R.id.nav_more
-        };
+        int[] ids = { R.id.nav_play, R.id.nav_mods, R.id.nav_controls, R.id.nav_more };
         View root = getView();
         if (root == null) return;
         for (int id : ids) {
@@ -139,17 +137,42 @@ public class MainMenuFragment extends Fragment {
 
     private void showPlaySection(View selected) {
         setSelectedNavigation(selected);
+        mDynamicContainer.animate().cancel();
+        mPlaySection.animate().cancel();
         mDynamicContainer.setVisibility(View.GONE);
+        mPlaySection.setAlpha(0f);
+        mPlaySection.setTranslationY(12f);
         mPlaySection.setVisibility(View.VISIBLE);
+        mPlaySection.animate().alpha(1f).translationY(0f).setDuration(220).start();
     }
 
     private void showDynamicFragment(Fragment fragment, String tag) {
+        mPlaySection.animate().cancel();
         mPlaySection.setVisibility(View.GONE);
+        mDynamicContainer.animate().cancel();
+        mDynamicContainer.setAlpha(0f);
+        mDynamicContainer.setTranslationY(16f);
         mDynamicContainer.setVisibility(View.VISIBLE);
         getChildFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                 .replace(R.id.home_dynamic_container, fragment, tag)
+                .runOnCommit(() -> mDynamicContainer.animate().alpha(1f).translationY(0f).setDuration(220).start())
                 .commit();
+    }
+
+    public boolean handleBackPress() {
+        if (mDynamicContainer != null && mDynamicContainer.getVisibility() == View.VISIBLE) {
+            showPlaySection(requireView().findViewById(R.id.nav_play));
+            return true;
+        }
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Exit Vornex Launcher?")
+                .setMessage("Do you want to close the launcher?")
+                .setNegativeButton("Stay", (dialog, which) -> dialog.dismiss())
+                .setPositiveButton("Exit", (dialog, which) -> requireActivity().finish())
+                .show();
+        return true;
     }
 
     private void showMoreMenu(View anchor) {
@@ -176,7 +199,7 @@ public class MainMenuFragment extends Fragment {
     private void showAboutApp() {
         new AlertDialog.Builder(requireContext())
                 .setTitle("About Vornex Launcher")
-                .setMessage("Immortal Launcher is your Minecraft Java launcher on Android.\n\n"
+                .setMessage("Vornex Launcher is your Minecraft Java launcher on Android.\n\n"
                         + "Manage game versions, mods, modpacks, shaders, resource packs, skins and capes.\n\n"
                         + "App owner: JikaxMc")
                 .setPositiveButton(android.R.string.ok, null)

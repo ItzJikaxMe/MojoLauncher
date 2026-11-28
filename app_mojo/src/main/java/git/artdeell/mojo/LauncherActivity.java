@@ -250,6 +250,8 @@ public class LauncherActivity extends BaseActivity {
             }
         }
 
+        Fragment root = getSupportFragmentManager().findFragmentById(mFragmentView.getId());
+        if (root instanceof MainMenuFragment && ((MainMenuFragment) root).handleBackPress()) return;
         super.onBackPressed();
     }
 
