@@ -212,12 +212,8 @@ public class MainMenuFragment extends Fragment {
     private void showAboutApp() {
         new AlertDialog.Builder(requireContext())
                 .setTitle("About Vornex Launcher")
-                .setMessage("Vornex Launcher is your Minecraft Java launcher on Android.
-
-"
-                        + "Manage game versions, mods, modpacks, shaders, resource packs, skins and capes.
-
-"
+                .setMessage("Vornex Launcher is your Minecraft Java launcher on Android.\\n\\n"
+                        + "Manage game versions, mods, modpacks, shaders, resource packs, skins and capes.\\n\\n"
                         + "App owner: JikaxMc")
                 .setPositiveButton(android.R.string.ok, null)
                 .show();
