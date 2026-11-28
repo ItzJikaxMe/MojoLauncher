@@ -93,15 +93,15 @@ public class MainMenuFragment extends Fragment {
         navPlay.setOnClickListener(v -> showPlaySection(navPlay));
         navMods.setOnClickListener(v -> openGameDirectory(requireContext()));
         navModsCard.setOnClickListener(v -> {
-            setSelectedNavigation(navPlay);
+            setSelectedNavigation(navModsCard);
             showDynamicFragment(new SearchModsFragment(), SearchModsFragment.TAG);
         });
         navResourcePacks.setOnClickListener(v -> {
-            setSelectedNavigation(navPlay);
+            setSelectedNavigation(navResourcePacks);
             showDynamicFragment(new SearchResourcePacksFragment(), SearchResourcePacksFragment.TAG);
         });
         navShaders.setOnClickListener(v -> {
-            setSelectedNavigation(navPlay);
+            setSelectedNavigation(navShaders);
             showDynamicFragment(new SearchShadersFragment(), SearchShadersFragment.TAG);
         });
         navModpacks.setOnClickListener(v -> {
@@ -131,7 +131,7 @@ public class MainMenuFragment extends Fragment {
     }
 
     private void setSelectedNavigation(View selected) {
-        int[] ids = { R.id.nav_play, R.id.nav_mods, R.id.nav_controls, R.id.nav_more };
+        int[] ids = { R.id.nav_play, R.id.nav_mods, R.id.nav_controls, R.id.nav_more, R.id.nav_settings, R.id.nav_modpacks, R.id.nav_resourcepacks, R.id.nav_shaders, R.id.nav_skins_capes };
         View root = getView();
         if (root == null) return;
         for (int id : ids) {
