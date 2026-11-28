@@ -91,7 +91,7 @@ public class MainMenuFragment extends Fragment {
         setSelectedNavigation(navPlay);
 
         navPlay.setOnClickListener(v -> showPlaySection(navPlay));
-        navMods.setOnClickListener(v -> openGameDirectory(requireContext()));
+        navMods.setOnClickListener(v -> {\n            setSelectedNavigation(navMods);\n            openGameDirectory(requireContext());\n        });
         navModsCard.setOnClickListener(v -> {
             setSelectedNavigation(navModsCard);
             showDynamicFragment(new SearchModsFragment(), SearchModsFragment.TAG);
@@ -116,7 +116,7 @@ public class MainMenuFragment extends Fragment {
             setSelectedNavigation(navControls);
             startActivity(new Intent(requireContext(), CustomControlsActivity.class));
         });
-        navMore.setOnClickListener(this::showMoreMenu);
+        navMore.setOnClickListener(v -> {\n            setSelectedNavigation(navMore);\n            showMoreMenu(v);\n        });
         if (navSettings != null) navSettings.setOnClickListener(v -> {
             setSelectedNavigation(navSettings);
             Tools.swapFragment(requireActivity(), LauncherPreferenceFragment.class,
