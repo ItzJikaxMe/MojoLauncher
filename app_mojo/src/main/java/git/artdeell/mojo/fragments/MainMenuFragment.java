@@ -24,6 +24,7 @@ import com.kdt.mcgui.ProgressLayout;
 import com.kdt.mcgui.mcVersionSpinner;
 
 import git.artdeell.mojo.CustomControlsActivity;
+import git.artdeell.mojo.LauncherActivity;
 import git.artdeell.mojo.R;
 import git.artdeell.mojo.Tools;
 import git.artdeell.mojo.contracts.OpenDocumentWithExtension;
@@ -70,6 +71,7 @@ public class MainMenuFragment extends Fragment {
         View navSkinsCapes = view.findViewById(R.id.nav_skins_capes);
         View navControls = view.findViewById(R.id.nav_controls);
         View navMore = view.findViewById(R.id.nav_more);
+        View navSettings = view.findViewById(R.id.nav_settings);
 
         ImageButton editProfileButton = view.findViewById(R.id.edit_profile_button);
         View youtubeButton = requireActivity().findViewById(R.id.youtube_channel_button);
@@ -115,6 +117,9 @@ public class MainMenuFragment extends Fragment {
             startActivity(new Intent(requireContext(), CustomControlsActivity.class));
         });
         navMore.setOnClickListener(this::showMoreMenu);
+        if (navSettings != null) navSettings.setOnClickListener(v ->
+                Tools.swapFragment(requireActivity(), LauncherPreferenceFragment.class,
+                        LauncherActivity.SETTING_FRAGMENT_TAG, null));
 
         editProfileButton.setOnClickListener(v ->
                 mVersionSpinner.openProfileEditor(requireActivity()));
