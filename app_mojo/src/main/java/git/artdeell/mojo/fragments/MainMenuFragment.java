@@ -93,23 +93,23 @@ public class MainMenuFragment extends Fragment {
         navPlay.setOnClickListener(v -> showPlaySection(navPlay));
         navMods.setOnClickListener(v -> {\n            setSelectedNavigation(navMods);\n            openGameDirectory(requireContext());\n        });
         navModsCard.setOnClickListener(v -> {
-            setSelectedNavigation(navModsCard);
+            setSelectedNavigation(navPlay);
             showDynamicFragment(new SearchModsFragment(), SearchModsFragment.TAG);
         });
         navResourcePacks.setOnClickListener(v -> {
-            setSelectedNavigation(navResourcePacks);
+            setSelectedNavigation(navPlay);
             showDynamicFragment(new SearchResourcePacksFragment(), SearchResourcePacksFragment.TAG);
         });
         navShaders.setOnClickListener(v -> {
-            setSelectedNavigation(navShaders);
+            setSelectedNavigation(navPlay);
             showDynamicFragment(new SearchShadersFragment(), SearchShadersFragment.TAG);
         });
         navModpacks.setOnClickListener(v -> {
-            setSelectedNavigation(navModpacks);
+            setSelectedNavigation(navPlay);
             showDynamicFragment(new SearchModFragment(), SearchModFragment.TAG);
         });
         navSkinsCapes.setOnClickListener(v -> {
-            setSelectedNavigation(navSkinsCapes);
+            setSelectedNavigation(navPlay);
             showDynamicFragment(new SkinCapeFragment(), "SkinCapeFragment");
         });
         navControls.setOnClickListener(v -> {
