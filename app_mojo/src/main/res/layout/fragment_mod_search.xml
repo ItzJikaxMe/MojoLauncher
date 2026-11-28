@@ -36,7 +36,7 @@
             android:background="@drawable/auth_choice_offline"
             android:textSize="14sp"
             android:textColor="@color/launcher_text"
-            android:hintTextColor="@color/launcher_muted"
+            android:textColorHint="@color/launcher_muted"
             android:minHeight="48dp"
             android:translationZ="2dp"
 
