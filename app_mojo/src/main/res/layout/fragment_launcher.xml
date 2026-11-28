@@ -1,270 +1,255 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:id="@+id/fragment_menu_main"
-	android:gravity="top"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="vertical"
-	android:background="@color/background_app">
-	<ScrollView
-		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:fillViewport="true"
-		android:clipToPadding="false"
-		app:layout_constraintTop_toTopOf="parent"
-		app:layout_constraintBottom_toTopOf="@id/mc_version_spinner">
-		<androidx.constraintlayout.widget.ConstraintLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:paddingHorizontal="8dp"
-			android:paddingTop="14dp"
-			android:paddingBottom="18dp">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_menu_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_app">
 
-			<TextView
-				android:id="@+id/home_title"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="WELCOME BACK"
-				android:textColor="@color/primary_text"
-				android:textSize="23sp"
-				android:textStyle="bold"
-				android:letterSpacing="0.025"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:id="@+id/play_section"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="false"
+        android:paddingBottom="12dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/vornex_bottom_nav">
 
-			<TextView
-				android:id="@+id/home_subtitle"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="4dp"
-				android:text="Your Minecraft world starts here."
-				android:textColor="@color/secondary_text"
-				android:textSize="13sp"
-				app:layout_constraintStart_toStartOf="@id/home_title"
-				app:layout_constraintTop_toBottomOf="@id/home_title" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:paddingTop="22dp"
+            android:paddingBottom="18dp">
 
-			<androidx.constraintlayout.widget.ConstraintLayout
-				android:id="@+id/home_hero_panel"
-				android:layout_width="match_parent"
-				android:layout_height="116dp"
-				android:layout_marginTop="18dp"
-				android:background="@drawable/home_hero_panel"
-				android:padding="18dp"
-				app:layout_constraintTop_toBottomOf="@id/home_subtitle">
+            <ImageView
+                android:layout_width="112dp"
+                android:layout_height="112dp"
+                android:src="@mipmap/ic_launcher"
+                android:contentDescription="Vornex VL logo"
+                android:scaleType="fitCenter" />
 
-				<TextView
-					android:id="@+id/home_hero_eyebrow"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="MINECRAFT • MOBILE EDITION"
-					android:textColor="@color/accent_soft"
-					android:textSize="10sp"
-					android:textStyle="bold"
-					android:letterSpacing="0.12"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Vornex Launcher"
+                android:textColor="@color/primary_text"
+                android:textSize="27sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.01" />
 
-				<TextView
-					android:id="@+id/home_hero_title"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="9dp"
-					android:text="BUILD. EXPLORE. PLAY."
-					android:textColor="@color/primary_text"
-					android:textSize="19sp"
-					android:textStyle="bold"
-					android:letterSpacing="0.015"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toBottomOf="@id/home_hero_eyebrow" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="Minecraft Java Launcher"
+                android:textColor="@color/secondary_text"
+                android:textSize="14sp" />
 
-				<TextView
-					android:id="@+id/home_hero_caption"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="3dp"
-					android:text="Everything you need, in one place."
-					android:textColor="@color/secondary_text"
-					android:textSize="11sp"
-					app:layout_constraintStart_toStartOf="@id/home_hero_title"
-					app:layout_constraintTop_toBottomOf="@id/home_hero_title" />
-			</androidx.constraintlayout.widget.ConstraintLayout>
-
-			<androidx.constraintlayout.widget.Guideline
-				android:id="@+id/center_guideline"
-				android:layout_width="0dp"
-				android:layout_height="0dp"
-				android:orientation="vertical"
-				app:layout_constraintGuide_percent="0.5" />
-
-			<com.kdt.mcgui.LauncherMenuButton
-				android:id="@+id/social_media_button"
-				style="@style/LauncherMenuButton.Universal"
-				android:layout_width="0dp"
-				android:layout_marginTop="14dp"
-				android:drawableStart="@drawable/ic_youtube"
-				android:text="YouTube channel"
-				app:layout_constraintTop_toBottomOf="@id/home_hero_panel"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintEnd_toStartOf="@id/social_divider" />
-
-			<View
-				android:id="@+id/social_divider"
-				style="@style/LauncherFragment_Divider"
-				android:layout_marginVertical="12dp"
-				app:layout_constraintTop_toTopOf="@id/social_media_button"
-				app:layout_constraintStart_toStartOf="@id/center_guideline"
-				app:layout_constraintEnd_toEndOf="@id/center_guideline"
-				app:layout_constraintBottom_toBottomOf="@id/social_media_button" />
-
-			<com.kdt.mcgui.LauncherMenuButton
-				android:id="@+id/news_button"
-				style="@style/LauncherMenuButton.Universal"
-				android:layout_width="0dp"
-				android:drawableStart="@drawable/ic_info_outline"
-				android:text="About app"
-				app:layout_constraintTop_toTopOf="@id/social_media_button"
-				app:layout_constraintStart_toEndOf="@id/social_divider"
-				app:layout_constraintEnd_toEndOf="parent" />
-
-			<TextView
-				android:id="@+id/home_section_title"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="8dp"
-				android:layout_marginTop="22dp"
-				android:text="TOOLS &amp; CUSTOMIZATION"
-				android:textColor="@color/secondary_text"
-				android:textSize="11sp"
-				android:textStyle="bold"
-				android:letterSpacing="0.10"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/social_media_button" />
-
-			<com.kdt.mcgui.LauncherMenuButton
-				android:id="@+id/custom_control_button"
-				style="@style/LauncherMenuButton.Universal"
-				android:layout_width="match_parent"
-				android:drawableStart="@drawable/ic_px_gamepad"
-				android:text="@string/mcl_option_customcontrol"
-				app:layout_constraintTop_toBottomOf="@id/home_section_title" />
-
-			<com.kdt.mcgui.LauncherMenuButton
-				android:id="@+id/install_jar_button"
-				style="@style/LauncherMenuButton.Universal"
-				android:layout_width="match_parent"
-				android:drawableStart="@drawable/ic_px_java_run"
-				android:text="@string/main_install_jar_file"
-				app:layout_constraintTop_toBottomOf="@id/custom_control_button" />
-
-			<com.kdt.mcgui.LauncherMenuButton
-				android:id="@+id/share_logs_button"
-				style="@style/LauncherMenuButton.Universal"
-				android:layout_width="match_parent"
-				android:drawableStart="@drawable/ic_px_sharelog"
-				android:text="@string/main_share_logs"
-				app:layout_constraintTop_toBottomOf="@id/install_jar_button" />
-
-			<com.kdt.mcgui.LauncherMenuButton
-				android:id="@+id/open_files_button"
-				style="@style/LauncherMenuButton.Universal"
-				android:layout_width="match_parent"
-				android:drawableStart="@drawable/ic_px_folder"
-				android:text="@string/mcl_button_open_directory"
-				app:layout_constraintTop_toBottomOf="@id/share_logs_button" />
-
-			<com.kdt.mcgui.LauncherMenuButton
-				android:id="@+id/modpacks_button"
-				style="@style/LauncherMenuButton.Universal"
-				android:layout_width="match_parent"
-				android:drawableStart="@drawable/ic_modrinth"
-				android:text="@string/launcher_modpacks"
-				app:layout_constraintTop_toBottomOf="@id/open_files_button" />
-		
-            <com.kdt.mcgui.LauncherMenuButton
-                android:id="@+id/mods_button"
-                style="@style/LauncherMenuButton.Universal"
+            <com.kdt.mcgui.AccountSpinner
+                android:id="@+id/account_spinner"
                 android:layout_width="match_parent"
-                android:drawableStart="@drawable/ic_px_folder"
-                android:text="@string/launcher_mods"
-                app:layout_constraintTop_toBottomOf="@id/modpacks_button" />
-            <com.kdt.mcgui.LauncherMenuButton
-                android:id="@+id/shaders_button"
-                style="@style/LauncherMenuButton.Universal"
+                android:layout_height="58dp"
+                android:layout_marginTop="18dp"
+                android:dropDownWidth="@dimen/_250sdp"
+                android:dropDownVerticalOffset="@dimen/_52sdp"
+                android:paddingEnd="@dimen/_52sdp"
+                android:background="@drawable/account_header_background" />
+
+            <com.kdt.mcgui.MineButton
+                android:id="@+id/play_button"
                 android:layout_width="match_parent"
-                android:drawableStart="@drawable/ic_px_folder"
-                android:text="@string/launcher_shaders"
-                app:layout_constraintTop_toBottomOf="@id/mods_button" />
-            <com.kdt.mcgui.LauncherMenuButton
-                android:id="@+id/resourcepacks_button"
-                style="@style/LauncherMenuButton.Universal"
+                android:layout_height="60dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/launcher_play_button"
+                android:text="@string/main_play"
+                android:textAllCaps="false"
+                android:textColor="@color/launcher_text"
+                android:textSize="18sp" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:drawableStart="@drawable/ic_px_folder"
-                android:text="@string/launcher_resourcepacks"
-                app:layout_constraintTop_toBottomOf="@id/shaders_button" />
-            <com.kdt.mcgui.LauncherMenuButton
-                android:id="@+id/skins_capes_button"
-                style="@style/LauncherMenuButton.Universal"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:background="@drawable/vornex_card"
+                android:paddingStart="12dp"
+                android:paddingEnd="6dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <com.kdt.mcgui.mcVersionSpinner
+                    android:id="@+id/mc_version_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="54dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:drawableEnd="@drawable/spinner_arrow"
+                    app:drawableEndSize="@dimen/padding_heavy"
+                    app:drawableStartIntegerScaling="true"
+                    app:drawableStartSize="34dp"
+                    app:drawableEndPadding="1dp" />
+
+                <ImageButton
+                    android:id="@+id/edit_profile_button"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/launcher_nav_item"
+                    android:contentDescription="Edit selected version"
+                    android:src="@drawable/ic_px_edit"
+                    android:padding="10dp" />
+
+                <ImageButton
+                    android:id="@+id/add_version_button"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="6dp"
+                    android:background="@drawable/launcher_nav_item"
+                    android:contentDescription="Add Minecraft version"
+                    android:src="@drawable/ic_add"
+                    android:padding="10dp" />
+            </LinearLayout>
+
+            <TextView
                 android:layout_width="match_parent"
-                android:drawableStart="@drawable/ic_px_edit"
-                android:text="Skins &amp; Capes"
-                app:layout_constraintTop_toBottomOf="@id/resourcepacks_button" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="10dp"
+                android:text="ADD-ONS &amp; CUSTOMIZATION"
+                android:textColor="@color/primary_text"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:gravity="start" />
+
+            <LinearLayout
+                android:id="@+id/nav_mods_card"
+                android:layout_width="match_parent"
+                android:layout_height="76dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/vornex_card"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingHorizontal="16dp">
+                <ImageView android:layout_width="42dp" android:layout_height="42dp" android:src="@drawable/ic_vornex_mods" android:contentDescription="Mods"/>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:paddingStart="22dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Mods" android:textColor="@color/primary_text" android:textSize="17sp" android:textStyle="bold"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Discover Minecraft mods" android:textColor="@color/secondary_text" android:textSize="13sp"/>
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="›" android:textColor="@color/launcher_blue" android:textSize="32sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/nav_resourcepacks"
+                android:layout_width="match_parent"
+                android:layout_height="76dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/vornex_card"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingHorizontal="16dp">
+                <ImageView android:layout_width="42dp" android:layout_height="42dp" android:src="@drawable/ic_vornex_resourcepacks" android:contentDescription="Resource packs"/>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:paddingStart="12dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Resource Packs" android:textColor="@color/primary_text" android:textSize="17sp" android:textStyle="bold"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Change the look of your game" android:textColor="@color/secondary_text" android:textSize="13sp"/>
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="›" android:textColor="@color/launcher_blue" android:textSize="32sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/nav_shaders"
+                android:layout_width="match_parent"
+                android:layout_height="76dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/vornex_card"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingHorizontal="16dp">
+                <ImageView android:layout_width="42dp" android:layout_height="42dp" android:src="@drawable/ic_vornex_shaders" android:contentDescription="Shaders"/>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:paddingStart="12dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Shaders" android:textColor="@color/primary_text" android:textSize="17sp" android:textStyle="bold"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Enhance your visuals" android:textColor="@color/secondary_text" android:textSize="13sp"/>
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="›" android:textColor="@color/launcher_blue" android:textSize="32sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/nav_modpacks"
+                android:layout_width="match_parent"
+                android:layout_height="76dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/vornex_card"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingHorizontal="16dp">
+                <ImageView android:layout_width="42dp" android:layout_height="42dp" android:src="@drawable/ic_vornex_modpacks" android:contentDescription="Modpacks"/>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:paddingStart="12dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Modpacks" android:textColor="@color/primary_text" android:textSize="17sp" android:textStyle="bold"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Explore curated modpacks" android:textColor="@color/secondary_text" android:textSize="13sp"/>
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="›" android:textColor="@color/launcher_blue" android:textSize="32sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/nav_skins_capes"
+                android:layout_width="match_parent"
+                android:layout_height="76dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/vornex_card"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingHorizontal="16dp">
+                <ImageView android:layout_width="42dp" android:layout_height="42dp" android:src="@drawable/ic_px_edit" android:contentDescription="Skins and capes"/>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:paddingStart="12dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Skins &amp; Capes" android:textColor="@color/primary_text" android:textSize="17sp" android:textStyle="bold"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Customize your character" android:textColor="@color/secondary_text" android:textSize="13sp"/>
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="›" android:textColor="@color/launcher_blue" android:textSize="32sp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/home_dynamic_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/vornex_bottom_nav" />
+
+    <LinearLayout
+        android:id="@+id/vornex_bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@drawable/vornex_nav_bar"
+        android:paddingHorizontal="6dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView android:id="@+id/nav_play" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:drawableTop="@drawable/ic_vornex_home" android:drawablePadding="4dp" android:text="Home" android:textColor="@color/launcher_text" android:textSize="10sp" android:background="@drawable/launcher_nav_item" android:clickable="true" android:focusable="true" android:paddingTop="7dp" android:paddingBottom="4dp"/>
+        <TextView android:id="@+id/nav_mods" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:drawableTop="@drawable/ic_vornex_folder" android:drawablePadding="4dp" android:text="Folder" android:textColor="@color/launcher_text" android:textSize="10sp" android:background="@drawable/launcher_nav_item" android:clickable="true" android:focusable="true" android:paddingTop="7dp" android:paddingBottom="4dp"/>
+        <TextView android:id="@+id/nav_controls" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:drawableTop="@drawable/ic_vornex_controls" android:drawablePadding="4dp" android:text="Controls" android:textColor="@color/launcher_text" android:textSize="10sp" android:background="@drawable/launcher_nav_item" android:clickable="true" android:focusable="true" android:paddingTop="7dp" android:paddingBottom="4dp"/>
+        <TextView android:id="@+id/nav_more" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:drawableTop="@drawable/ic_vornex_more" android:drawablePadding="4dp" android:text="More" android:textColor="@color/launcher_text" android:textSize="10sp" android:background="@drawable/launcher_nav_item" android:clickable="true" android:focusable="true" android:paddingTop="7dp" android:paddingBottom="4dp"/>
+        <TextView android:id="@+id/nav_settings" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:drawableTop="@drawable/ic_vornex_settings" android:drawablePadding="4dp" android:text="Settings" android:textColor="@color/launcher_text" android:textSize="10sp" android:background="@drawable/launcher_nav_item" android:clickable="true" android:focusable="true" android:paddingTop="7dp" android:paddingBottom="4dp"/>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
-	</ScrollView>
-
-	<com.kdt.mcgui.mcVersionSpinner
-		android:id="@+id/mc_version_spinner"
-		android:layout_width="0dp"
-		android:layout_height="@dimen/_52sdp"
-		android:background="@android:color/transparent"
-		android:drawableEnd="@drawable/spinner_arrow"
-
-		app:drawableEndSize="@dimen/padding_heavy"
-		app:drawableStartIntegerScaling="true"
-		app:drawableStartSize="@dimen/_36sdp"
-		app:drawableEndPadding="@dimen/_1sdp"
-
-		app:layout_constraintBottom_toTopOf="@id/play_button"
-		app:layout_constraintEnd_toStartOf="@+id/edit_profile_button"
-		app:layout_constraintStart_toStartOf="parent" />
-
-	<ImageButton
-		android:id="@+id/edit_profile_button"
-		android:layout_width="@dimen/_52sdp"
-		android:layout_height="@dimen/_52sdp"
-		android:background="?android:attr/selectableItemBackground"
-
-		android:src="@drawable/ic_px_edit"
-		app:layout_constraintBottom_toBottomOf="@+id/mc_version_spinner"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintTop_toTopOf="@+id/mc_version_spinner" />
-
-
-	<!-- This view is for cosmetic purpose only -->
-	<View
-		android:id="@+id/_background_display_view"
-		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:background="@color/background_bottom_bar"
-		android:translationZ="-1dp"
-
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintTop_toTopOf="@id/mc_version_spinner" />
-
-	<com.kdt.mcgui.MineButton
-		android:id="@+id/play_button"
-		android:layout_width="match_parent"
-		android:layout_height="@dimen/_62sdp"
-
-		android:layout_marginHorizontal="@dimen/_17sdp"
-		android:layout_marginBottom="@dimen/_15sdp"
-
-		android:textAllCaps="true"
-		android:text="@string/main_play"
-		app:layout_constraintBottom_toBottomOf="parent"
-		/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
