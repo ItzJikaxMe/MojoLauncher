@@ -119,7 +119,7 @@ public class MainMenuFragment extends Fragment {
         navMore.setOnClickListener(this::showMoreMenu);
         if (navSettings != null) navSettings.setOnClickListener(v ->
                 Tools.swapFragment(requireActivity(), LauncherPreferenceFragment.class,
-                        LauncherActivity.SETTING_FRAGMENT_TAG, null));
+                        LauncherActivity.SETTING_FRAGMENT_TAG, null);\n        });
 
         editProfileButton.setOnClickListener(v ->
                 mVersionSpinner.openProfileEditor(requireActivity()));
