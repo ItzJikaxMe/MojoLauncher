@@ -89,7 +89,7 @@
                             android:layout_width="13dp"
                             android:layout_height="13dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_px_file"
+                            android:src="@drawable/ic_vornex_mods"
                             android:tint="@color/launcher_green_bright"
                             android:scaleType="fitCenter" />
                     </FrameLayout>
@@ -107,7 +107,7 @@
                             android:layout_width="13dp"
                             android:layout_height="13dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_px_image"
+                            android:src="@drawable/ic_vornex_resourcepacks"
                             android:tint="@color/launcher_green_bright"
                             android:scaleType="fitCenter" />
                     </FrameLayout>
@@ -125,7 +125,7 @@
                             android:layout_width="13dp"
                             android:layout_height="13dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_px_experiment"
+                            android:src="@drawable/ic_vornex_shaders"
                             android:tint="@color/launcher_green_bright"
                             android:scaleType="fitCenter" />
                     </FrameLayout>
@@ -143,7 +143,7 @@
                             android:layout_width="13dp"
                             android:layout_height="13dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_modrinth"
+                            android:src="@drawable/ic_vornex_modpacks"
                             android:tint="@color/launcher_green_bright"
                             android:scaleType="fitCenter" />
                     </FrameLayout>
